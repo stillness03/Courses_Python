@@ -1,7 +1,10 @@
-from rest_framework.routers import DefaultRouter
-from .views import AuthViewSet
+from django.urls import path
+from .views import RegisterView, CustomTokenObtainPairView, LogoutView
+from rest_framework_simplejwt.views import TokenRefreshView
 
-router = DefaultRouter()
-router.register(r'auth', AuthViewSet, basename='auth')
-
-urlpatterns = router.urls
+urlpatterns = [
+    path('register/', RegisterView.as_view(), name='register'),
+    path('login/', CustomTokenObtainPairView.as_view(), name='login'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+]
