@@ -1,0 +1,124 @@
+{% extends "admin_panel/base.html" %}
+{% block title %}Lessons{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2>Lessons</h2>
+  <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createLessonModal">+ Add Lesson</button>
+</div>
+
+<!-- Table Lessons-->
+<table class="table table-striped shadow-sm">
+  <thead class="table-dark">
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Course</th>
+      <th>Order</th>
+      <th>Created</th>
+    </tr>
+  </thead>
+  <tbody id="lessons-table">
+  </tbody>
+</table>
+
+<!-- Modal for created -->
+<div class="modal fade" id="createLessonModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Create Lesson</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="create-lesson-form">
+          <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input type="text" class="form-control" name="title" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Content</label>
+            <textarea class="form-control" name="content"></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Course</label>
+            <select class="form-select" name="course" id="course-select" required></select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Order</label>
+            <input type="number" class="form-control" name="order" value="1" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  loadLessons();
+  loadCoursesSelect();
+
+  // Load lessons into table
+  function loadLessons() {
+    fetch("/api/lessons/")
+      .then(res => res.json())
+      .then(data => {
+        const table = document.getElementById("lessons-table");
+        table.innerHTML = "";
+        data.forEach(lesson => {
+          table.innerHTML += `
+            <tr>
+              <td>${lesson.id}</td>
+              <td>${lesson.title}</td>
+              <td>${lesson.course_title || "—"}</td>
+              <td>${lesson.order}</td>
+              <td>${new Date(lesson.created_at).toLocaleDateString()}</td>
+            </tr>
+          `;
+        });
+      });
+  }
+
+  // Get lesson courses for select
+  function loadCoursesSelect() {
+    fetch("/api/courses/")
+      .then(res => res.json())
+      .then(courses => {
+        const select = document.getElementById("course-select");
+        select.innerHTML = "";
+        courses.forEach(course => {
+          select.innerHTML += `<option value="${course.id}">${course.title}</option>`;
+        });
+      });
+  }
+
+  // Create lesson
+  document.getElementById("create-lesson-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    const payload = Object.fromEntries(formData.entries());
+
+    fetch("/api/lessons/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": window.CSRF_TOKEN
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(res => {
+      if (!res.ok) throw new Error("Failed to create lesson");
+      return res.json();
+    })
+    .then(() => {
+      this.reset();
+      loadLessons();
+      bootstrap.Modal.getInstance(document.getElementById("createLessonModal")).hide();
+    })
+    .catch(err => alert(err));
+  });
+});
+</script>
+{% endblock %}

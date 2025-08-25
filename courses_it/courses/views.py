@@ -1,6 +1,6 @@
 from rest_framework import viewsets, permissions
-from .serializers import CourseSerializer, LessonSerializer, QuizSerializer
-from .models import Course, Lesson, Quiz
+from .serializers import CourseSerializer, LessonSerializer, QuizSerializer, QuestionSerializer, AnswerSerializer
+from .models import Course, Lesson, Quiz, Question, Answer
 from django.shortcuts import render
 
 
@@ -23,4 +23,21 @@ class LessonViewSet(viewsets.ModelViewSet):
 class QuizViewSet(viewsets.ModelViewSet):
     queryset = Quiz.objects.all()
     serializer_class = QuizSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAdminOrReadOnly]
+
+class QuizViewSet(viewsets.ModelViewSet):
+    queryset = Quiz.objects.all()
+    serializer_class = QuizSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAdminOrReadOnly]
+
+
+class QuestionViewSet(viewsets.ModelViewSet):
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAdminOrReadOnly]
+
+
+class AnswerViewSet(viewsets.ModelViewSet):
+    queryset = Answer.objects.all()
+    serializer_class = AnswerSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAdminOrReadOnly]

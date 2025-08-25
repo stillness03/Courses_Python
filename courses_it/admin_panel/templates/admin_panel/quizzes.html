@@ -1,0 +1,88 @@
+{% extends "admin_panel/base.html" %}
+{% block title %}Quizzes{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2>Quizzes</h2>
+  <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createQuizModal">+ Add Quiz</button>
+</div>
+
+<table class="table table-striped shadow-sm">
+  <thead class="table-dark">
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Lesson</th>
+      <th>Questions</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="quizzes-table"></tbody>
+</table>
+
+<!-- Modal Create Quiz -->
+<div class="modal fade" id="createQuizModal" tabindex="-1">
+  <div class="modal-dialog">
+    <form id="quizForm" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Create Quiz</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Title</label>
+          <input type="text" id="quizTitle" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Lesson ID</label>
+          <input type="number" id="lessonId" class="form-control" required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  loadQuizzes();
+
+  document.getElementById("quizForm").addEventListener("submit", e => {
+    e.preventDefault();
+    fetch("/api/quizzes/", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        title: document.getElementById("quizTitle").value,
+        lesson: document.getElementById("lessonId").value
+      })
+    }).then(() => {
+      location.reload();
+    });
+  });
+});
+
+function loadQuizzes() {
+  fetch("/api/quizzes/")
+    .then(res => res.json())
+    .then(data => {
+      const table = document.getElementById("quizzes-table");
+      data.forEach(quiz => {
+        table.innerHTML += `
+          <tr>
+            <td>${quiz.id}</td>
+            <td>${quiz.title}</td>
+            <td>${quiz.lesson_title}</td>
+            <td>${quiz.questions.length}</td>
+            <td>
+              <a href="/admin-panel/quizzes/${quiz.id}/" class="btn btn-primary btn-sm">Manage</a>
+            </td>
+          </tr>
+        `;
+      });
+    });
+}
+</script>
+{% endblock %}
