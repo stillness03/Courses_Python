@@ -1,0 +1,44 @@
+from django.shortcuts import render, get_object_or_404
+from courses.models import Course
+from django.core.paginator import Paginator
+
+def popular_list(request):
+    courses = Course.objects.filter()[:3]
+    return render(request,
+                  'main/index/index.html',
+                  {
+                      'courses': courses,
+                      'is_index_page': True
+                  })
+
+
+def course_detail(request, slug):
+    course = get_object_or_404(Course,
+                               slug=slug,
+                               available=True)
+    return render(request,
+                  'main/course/detail.html',
+                  {
+                      'course': course,
+                      'is_index_page': False
+                  })
+
+
+def course_list(request, category_slug=None):
+    page = request.GET.get('page', 1)
+
+    courses = Course.objects.filter(available=True)
+
+    if category_slug:
+        courses = courses.filter(category__slug=category_slug)
+
+    paginator = Paginator(courses, 10)
+    current_page = paginator.get_page(page)
+
+    return render(request,
+                  'main/course/list.html',
+                  {
+                      'category_slug': category_slug,
+                      'courses': current_page,
+                      'is_index_page': False
+                  })

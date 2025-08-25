@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Courses IT{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="header sticky-top">
+        <div class="header-container">
+            <div class="logo">
+                <a href="/"><img src="{% static 'img/logo.png' %}" alt="Learnix" class="learnx-logo"></a>
+            </div>
+
+            <button class="burger-menu d-lg-none" aria-label="Toggle navigation">
+                <span class="burger-line"></span>
+                <span class="burger-line"></span>
+                <span class="burger-line"></span>
+            </button>
+
+            <nav class="header-nav">
+                <ul class="nav-links">
+                    <li><a href="/about_us" class="nav-item">About us</a></li>
+                    <li><a href="/cost" class="nav-item">Cost</a></li>
+                    <li><a href="/course" class="nav-item">Course</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>CareerPath</h3>
+                    <p>We provide high-quality education and career guidance to help you succeed in the tech industry.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Explore</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="#"><i class="fas fa-book"></i> Courses</a></li>
+                        <li><a href="#"><i class="fas fa-briefcase"></i> Professions</a></li>
+                        <li><a href="#"><i class="fas fa-star"></i> Success Stories</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 1 Maidan Nezalezhnosti, Kyiv, 02000</li>
+                        <li><i class="fas fa-phone"></i> (050) 123-45-67</li>
+                        <li><i class="fas fa-envelope"></i> info@careerpath.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 CareerPath. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.burger-menu').addEventListener('click', function() {
+            document.querySelector('.header-nav').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
