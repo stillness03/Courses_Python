@@ -1,15 +1,57 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Admin-Panel</title>
-</head>
-<body>
-    <h1>Dear administrator, welcome to our Admin-Panel!</h1>
-    <p>Here you can manage users, courses, and payments.</p>
-    <ul>
-        <li><a href="#">Users</a></li>
-        <li><a href="#">Courses</a></li>
-        <li><a href="#">Payments</a></li>
-    </ul>
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h2 class="mb-4">📊 Dashboard</h2>
+
+<div class="row">
+  <div class="col-md-3">
+    <div class="card text-bg-primary mb-3">
+      <div class="card-body text-center">
+        <h5 class="card-title">Courses</h5>
+        <p class="card-text fs-3" id="count-courses">0</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-bg-success mb-3">
+      <div class="card-body text-center">
+        <h5 class="card-title">Lessons</h5>
+        <p class="card-text fs-3" id="count-lessons">0</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-bg-warning mb-3">
+      <div class="card-body text-center">
+        <h5 class="card-title">Quizzes</h5>
+        <p class="card-text fs-3" id="count-quizzes">0</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-bg-danger mb-3">
+      <div class="card-body text-center">
+        <h5 class="card-title">Users</h5>
+        <p class="card-text fs-3" id="count-users">0</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+async function loadDashboard() {
+  const endpoints = {
+    courses: "/api/courses/",
+    lessons: "/api/lessons/",
+    quizzes: "/api/quizzes/",
+    users: "/api/users/"
+  }
+  for (const [key, url] of Object.entries(endpoints)) {
+    const res = await fetch(url);
+    const data = await res.json();
+    document.getElementById(`count-${key}`).innerText = data.length;
+  }
+}
+loadDashboard();
+</script>
+{% endblock %}

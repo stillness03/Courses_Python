@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Users{% endblock %}
+{% block content %}
+<h2 class="mb-4">👤 Users</h2>
+
+<form id="user-form" class="mb-4">
+  <div class="row g-2">
+    <div class="col-md-4"><input class="form-control" type="email" name="email" placeholder="Email" required></div>
+    <div class="col-md-3"><input class="form-control" type="text" name="username" placeholder="Username"></div>
+    <div class="col-md-3"><input class="form-control" type="password" name="password" placeholder="Password" required></div>
+    <div class="col-md-2"><button class="btn btn-primary w-100" type="submit">Add User</button></div>
+  </div>
+</form>
+
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Username</th>
+      <th>Date Joined</th>
+    </tr>
+  </thead>
+  <tbody id="users-list"></tbody>
+</table>
+
+<script>
+async function loadUsers() {
+  const res = await fetch("/api/users/");
+  const users = await res.json();
+  const tbody = document.getElementById("users-list");
+  tbody.innerHTML = "";
+  users.forEach(u => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${u.email}</td>
+        <td>${u.username}</td>
+        <td>${new Date(u.date_joined).toLocaleDateString()}</td>
+      </tr>`;
+  });
+}
+
+document.getElementById("user-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const formData = Object.fromEntries(new FormData(e.target).entries());
+  await fetch("/api/users/", {
+    method: "POST",
+    headers: {"Content-Type": "application/json", "X-CSRFToken": window.CSRF_TOKEN},
+    body: JSON.stringify(formData)
+  });
+  e.target.reset();
+  loadUsers();
+});
+
+loadUsers();
+</script>
+{% endblock %}

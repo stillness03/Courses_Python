@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Payments{% endblock %}
+{% block content %}
+<h2 class="mb-4">💳 Payments</h2>
+
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Course</th>
+      <th>Amount</th>
+      <th>Status</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody id="payments-list"></tbody>
+</table>
+
+<script>
+async function loadPayments() {
+  const res = await fetch("/api/payments/");
+  const payments = await res.json();
+  const tbody = document.getElementById("payments-list");
+  tbody.innerHTML = "";
+  payments.forEach(p => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${p.user_email}</td>
+        <td>${p.course_title}</td>
+        <td>${p.amount}</td>
+        <td>${p.status}</td>
+        <td>${new Date(p.created_at).toLocaleDateString()}</td>
+      </tr>`;
+  });
+}
+loadPayments();
+</script>
+{% endblock %}
