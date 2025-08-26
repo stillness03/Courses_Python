@@ -4,5 +4,79 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
+<section class="hero">
+    <h1>Advance Your Career with Tech Skills</h1>
+    <p>Learn in-demand technology skills from industry experts</p>
+    <a href="/courses/" class="cta-button">Browse Courses</a>
+</section>
 
+<section class="featured-courses">
+    <h2>Popular Courses</h2>
+    <div class="courses-grid">
+        {% for course in courses %}
+        <div class="course-card">
+            <div class="course-image">
+                {% if course.image %}
+                    <img src="{{ course.image.url }}" alt="{{ course.title }}">
+                {% else %}
+                    <div class="course-image-placeholder">{{ course.title|slice:":2" }}</div>
+                {% endif %}
+            </div>
+            <div class="course-content">
+                <span class="course-category">{{ course.type_course }}</span>
+                <h3 class="course-title">{{ course.title }}</h3>
+                <p class="course-description">{{ course.description|truncatewords:20 }}</p>
+                <div class="course-meta">
+                    <span class="course-duration">{{ course.duration }} months</span>
+                    <span class="course-level">Beginner to Advanced</span>
+                </div>
+                <div class="course-footer">
+                    <div class="course-price">${{ course.price }}</div>
+                    {% if course.slug %}
+                        <a href="/courses/{{ course.id }}/" class="btn-enroll">View Course</a>
+                    {% else %}
+                        <a href="/courses/" class="btn-enroll">View Course</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="no-courses">
+            <p>No courses available at the moment.</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="features">
+    <h2>Why Choose Learnix?</h2>
+    <div class="features-grid">
+        <div class="feature">
+            <h3>Expert Instructors</h3>
+            <p>Learn from industry professionals with real-world experience</p>
+        </div>
+        <div class="feature">
+            <h3>Project-Based Learning</h3>
+            <p>Build portfolio projects that demonstrate your skills</p>
+        </div>
+        <div class="feature">
+            <h3>Career Support</h3>
+            <p>Get help with job placement and career advancement</p>
+        </div>
+    </div>
+</section>
+
+<section class="testimonials">
+    <h2>Student Success Stories</h2>
+    <div class="testimonials-grid">
+        <div class="testimonial">
+            <p>"Learnix helped me transition from retail to a web developer role in just 6 months!"</p>
+            <span>- Sarah Johnson, Web Developer</span>
+        </div>
+        <div class="testimonial">
+            <p>"The Python course gave me the skills I needed to automate tasks at work and get promoted."</p>
+            <span>- Michael Chen, Data Analyst</span>
+        </div>
+    </div>
+</section>
 {% endblock content %}
