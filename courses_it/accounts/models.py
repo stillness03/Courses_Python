@@ -1,8 +1,9 @@
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin,  BaseUserManager
 from django.db import models
+
 from django.utils import timezone
 
-class CustomUserManager(models.Manager):
+class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
             raise ValueError('The Email field must be set')
@@ -23,15 +24,18 @@ class CustomUserManager(models.Manager):
             raise ValueError("Superuser must have is_superuser=True.")
         return self.create_user(email, password, **extra_fields)
 
+    def get_by_natural_key(self, email):
+        return self.get(email=email)
+    
+
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    username = models.CharField(max_length=150, unique=True, null=True)
+    username = models.CharField(max_length=150, unique=True, blank=True, null=True)
     email = models.EmailField(unique=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
 
     objects = CustomUserManager()
-    
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 

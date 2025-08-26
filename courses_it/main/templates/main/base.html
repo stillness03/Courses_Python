@@ -27,6 +27,14 @@
                     <li><a href="/about_us" class="nav-item">About us</a></li>
                     <li><a href="/cost" class="nav-item">Cost</a></li>
                     <li><a href="/course" class="nav-item">Course</a></li>
+                    
+                    {% if request.user.is_authenticated %}
+                        <li><a href="/logout" class="nav-item">Logout</a></li>
+                        <li><span class="nav-item">Hello, {{ request.user.email }}</span></li>
+                    {% else %}
+                        <li><a href="/login" class="nav-item">Login</a></li>
+                        <li><a href="/register" class="nav-item">Register</a></li>
+                    {% endif %}
                 </ul>
             </nav>
         </div>

@@ -7,6 +7,11 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
 from .models import CustomUser
 from .serializers import RegisterSerializer, CustomTokenObtainPairSerializer
+# --- HTML Views ---
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 class RegisterView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
@@ -39,7 +44,58 @@ class LogoutView(APIView):
             return Response({"message": "Successfully logged out"}, status=status.HTTP_205_RESET_CONTENT)
         except TokenError as e:
             return Response({"error": f"Invalid refresh token: {str(e)}"}, status=status.HTTP_400_BAD_REQUEST)
-        
+
+
+
+# --- HTML Views ---
+def register_page(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        password2 = request.POST.get("password2")
+
+        if password != password2:
+            messages.error(request, "Passwords do not match")
+            return redirect("register")
+
+        if CustomUser.objects.filter(email=email).exists():
+            messages.error(request, "This email is already registered")
+            return redirect("register")
+
+        user = CustomUser.objects.create_user(email=email, password=password)
+        messages.success(request, "Registration successful! Please log in.")
+        return redirect("login")
+
+    return render(request, "accounts/register.html")
+
+
+def login_page(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        user = authenticate(request, email=email, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect("dashboard")
+        else:
+            messages.error(request, "Invalid email or password")
+            return redirect("login")
+
+    return render(request, "accounts/login.html")
+
+
+@login_required
+def dashboard_page(request):
+    return render(request, "accounts/dashboard.html", {"user": request.user})
+
+
+@login_required
+def logout_page(request):
+    if request.method == "POST":
+        logout(request)
+        return redirect("login")
+      
 
 # class AuthViewSet(viewsets.ViewSet):
 #     @action(detail=False, methods=['post'])
