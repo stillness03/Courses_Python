@@ -42,3 +42,6 @@ def course_list(request, category_slug=None):
                       'courses': current_page,
                       'is_index_page': False
                   })
+
+def about_us(request):
+    return render(request, 'main/nav_link/about-us.html')

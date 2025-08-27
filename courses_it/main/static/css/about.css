@@ -1,0 +1,455 @@
+.hero_about {
+    background: linear-gradient(120deg, var(--primary-light) 0%, var(--primary-color) 100%);
+    padding: 120px 0 80px;
+    text-align: center;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero_about::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.hero_about::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    left: -30px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.hero-content_about {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero_about h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.hero_about p {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    line-height: 1.6;
+}
+
+/* Team Section */
+.team_about {
+    padding: 100px 0;
+    background: var(--white);
+}
+
+.container_about {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section-title_about {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-title_about h2 {
+    font-size: 2.8rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+    color: var(--text-color);
+    position: relative;
+    display: inline-block;
+}
+
+.section-title_about h2::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: var(--primary-color);
+    border-radius: 2px;
+}
+
+.section-title_about p {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 25px auto 0;
+}
+
+.team-grid_about {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
+    margin-top: 50px;
+}
+
+.team-member_about {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s ease;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.team-member_about.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.team-member_about:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+.member-image_about {
+    height: 320px;
+    overflow: hidden;
+    position: relative;
+}
+
+.member-image_about img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.team-member_about:hover .member-image_about img {
+    transform: scale(1.05);
+}
+
+.member-content_about {
+    padding: 30px;
+    text-align: center;
+}
+
+.member-name_about {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-color);
+}
+
+.member-role_about {
+    color: var(--primary-color);
+    font-weight: 500;
+    margin-bottom: 15px;
+    font-size: 1rem;
+}
+
+.member-desc_about {
+    color: var(--text-light);
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.social-links_about {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.social-links_about a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: var(--gray-light);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+.social-links_about a:hover {
+    background: var(--primary-color);
+    color: var(--white);
+    transform: translateY(-3px);
+}
+
+/* Values Section */
+.values_about {
+    padding: 100px 0;
+    background: var(--gray-light);
+}
+
+.values-grid_about {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    margin-top: 50px;
+}
+
+.value-card_about {
+    background: var(--white);
+    padding: 50px 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    text-align: center;
+    transition: all 0.4s ease;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.value-card_about.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.value-card_about:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.value-icon_about {
+    width: 90px;
+    height: 90px;
+    background: var(--primary-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 30px;
+    color: var(--white);
+    font-size: 36px;
+    transition: all 0.3s ease;
+}
+
+.value-card_about:hover .value-icon_about {
+    background: var(--primary-color);
+    transform: scale(1.1) rotate(5deg);
+}
+
+.value-title_about {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+.value-desc_about {
+    color: var(--text-light);
+    line-height: 1.7;
+    font-size: 1.05rem;
+}
+
+/* Stats Section */
+.stat_abouts {
+    padding: 100px 0;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+}
+
+.stat_abouts::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.stats-grid_about {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    position: relative;
+    z-index: 2;
+}
+
+.stat-item_about {
+    text-align: center;
+    padding: 30px 20px;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.stat-item_about.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.stat-number {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    display: block;
+    color: var(--white);
+}
+
+.stat-label {
+    font-size: 1.2rem;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+/* CTA Section */
+.cta_about {
+    padding: 100px 0;
+    background: var(--white);
+    text-align: center;
+}
+
+.cta_about h2 {
+    font-size: 2.8rem;
+    margin-bottom: 20px;
+    color: var(--text-color);
+    font-weight: 700;
+}
+
+.cta_about p {
+    max-width: 600px;
+    margin: 0 auto 40px;
+    color: var(--text-light);
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+.cta_about .btn {
+    display: inline-block;
+    padding: 18px 40px;
+    background: var(--primary-color);
+    color: var(--white);
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 5px 20px rgba(44, 175, 107, 0.3);
+}
+
+.cta_about .btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(44, 175, 107, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .hero_about h1 {
+        font-size: 2.8rem;
+    }
+    
+    .section-title_about h2 {
+        font-size: 2.3rem;
+    }
+    
+    .team-grid_about {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero_about {
+        padding: 80px 0 60px;
+    }
+    
+    .hero_about h1 {
+        font-size: 2.3rem;
+    }
+    
+    .hero_about p {
+        font-size: 1.1rem;
+    }
+    
+    .team_about, .values_about, .stat_abouts, .cta_about {
+        padding: 70px 0;
+    }
+    
+    .section-title_about h2 {
+        font-size: 2rem;
+    }
+    
+    .team-grid_about, .values-grid_about {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .stats-grid_about {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+    
+    .member-image_about {
+        height: 280px;
+    }
+    
+    .cta_about h2 {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero_about h1 {
+        font-size: 2rem;
+    }
+    
+    .section-title_about h2 {
+        font-size: 1.8rem;
+    }
+    
+    .stats-grid_about {
+        grid-template-columns: 1fr;
+    }
+    
+    .stat-number {
+        font-size: 2.8rem;
+    }
+    
+    .cta_about h2 {
+        font-size: 1.9rem;
+    }
+    
+    .cta_about p {
+        font-size: 1.1rem;
+    }
+    
+    .cta_about .btn {
+        padding: 15px 30px;
+        font-size: 1rem;
+    }
+}
+
+/* Animation for elements */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate {
+    animation: fadeInUp 0.8s ease forwards;
+}
