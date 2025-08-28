@@ -29,7 +29,46 @@
                 <ul class="nav-links">
                     <li><a href="/about_us" class="nav-item">About us</a></li>
                     <li><a href="/cost" class="nav-item">Cost</a></li>
-                    <li><a href="/course" class="nav-item">Course</a></li>
+                    <li class="nav-item dropdown mega-dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" id="coursesDropdown">
+                            Courses
+                        </a>
+                        <div class="mega-menu">
+                            <div class="mega-content">
+                                <!-- left -->
+                                <div class="mega-left">
+                                    <h3>All Courses</h3>
+                                    <div class="course-types">
+                                        <button class="type-btn active">Technical</button>
+                                        <button class="type-btn">Nontechnical</button>
+                                    </div>
+                                    <div class="course-list">
+                                        {% for course in courses %}
+                                            {% if course.type_course == 'Technical' %}
+                                            <div class="course-item">
+                                                <i class="icon">💻</i>
+                                                {{ course.title }}
+                                            </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            
+                                <!-- right -->
+                                <div class="mega-right">
+                                    <h3>Popular Courses</h3>
+                                    <div class="popular-courses">
+                                        {% for course in popular_courses %}
+                                        <a href="/course/{{ course.id }}" class="popular-item">
+                                            <img src="{{ course.image_url }}" alt="{{ course.title }}">
+                                            <span>{{ course.title }}</span>
+                                        </a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
                     
                     {% if request.user.is_authenticated %}
                         <li><a href="/logout" class="nav-item">Logout</a></li>
