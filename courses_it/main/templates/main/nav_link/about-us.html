@@ -169,28 +169,28 @@
     <script>
         // Animation on scroll
         document.addEventListener('DOMContentLoaded', function() {
-            const animatedElements = document.querySelectorAll('.team-member, .value-card, .stat-item');
-            
+            const animatedElements = document.querySelectorAll(
+                '.team-member_about, .value-card_about, .stat-item_about'
+            );
+
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('animate');
                     }
                 });
-            }, {
-                threshold: 0.1
-            });
-            
+            }, { threshold: 0.1 });
+
             animatedElements.forEach(element => {
                 observer.observe(element);
             });
-            
+
             // Animate stats counters
             const studentsCount = document.getElementById('students-count');
             const completionRate = document.getElementById('completion-rate');
             const mentorsCount = document.getElementById('mentors-count');
             const coursesCount = document.getElementById('courses-count');
-            
+
             function animateValue(element, start, end, duration) {
                 let startTimestamp = null;
                 const step = (timestamp) => {
@@ -203,8 +203,7 @@
                 };
                 window.requestAnimationFrame(step);
             }
-            
-            // Start counter animation when stats section is in view
+
             const statsObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -216,8 +215,11 @@
                     }
                 });
             }, { threshold: 0.5 });
-            
-            statsObserver.observe(document.querySelector('.stats'));
+
+            const statsSection = document.querySelector('.stat_abouts');
+            if (statsSection) {
+                statsObserver.observe(statsSection);
+            }
         });
     </script>
 </body>

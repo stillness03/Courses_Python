@@ -1,0 +1,369 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Cost{% endblock title %}
+
+{% block content %}
+<body>
+    <!-- Hero Section -->
+    <section class="pricing-hero">
+        <div class="container">
+            <div class="pricing-hero-content">
+                <h1>Tuition Fees</h1>
+                <p>The price and payment terms depend on the learning format you choose</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Available Learning Formats</h2>
+                <p>Choose the option that suits you and start learning today</p>
+            </div>
+            
+            <div class="pricing-cards">
+                <!-- Basic Plan -->
+                <div class="pricing-card">
+                    <div class="pricing-card-header">
+                        <h3 class="pricing-card-title">Basic</h3>
+                        <div class="pricing-card-price">1499 UAH</div>
+                        <div class="pricing-card-period">/ month</div>
+                    </div>
+                    
+                    <div class="pricing-card-features">
+                        <div class="pricing-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Access to all lessons</span>
+                        </div>
+                        <div class="pricing-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Practical assignments</span>
+                        </div>
+                        <div class="pricing-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Technical support</span>
+                        </div>
+                        <div class="pricing-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Community access</span>
+                        </div>
+                    </div>
+                    
+                    <div class="pricing-card-cta">
+                        <a href="#" class="btn-primary">Choose Plan</a>
+                    </div>
+                </div>
+                
+                <!-- Popular Plan -->
+                <div class="pricing-card popular">
+                    <div class="pricing-card-header">
+                        <h3 class="pricing-card-title">Premium</h3>
+                        <div class="pricing-card-price">2499 UAH</div>
+                        <div class="pricing-card-period">/ month</div>
+                    </div>
+                    
+                    <div class="pricing-card-features">
+                        <div class="pricing-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Everything in Basic plan</span>
+                        </div>
+                        <div class="pricing-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Personal mentor</span>
+                        </div>
+                        <div class="pricing-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Homework review</span>
+                        </div>
+                        <div class="pricing-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Certificate of completion</span>
+                        </div>
+                        <div class="pricing-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Job placement assistance</span>
+                        </div>
+                    </div>
+                    
+                    <div class="pricing-card-cta">
+                        <a href="#" class="btn-primary">Choose Plan</a>
+                    </div>
+                </div>
+                
+                <!-- Pro Plan -->
+                <div class="pricing-card">
+                    <div class="pricing-card-header">
+                        <h3 class="pricing-card-title">Intensive</h3>
+                        <div class="pricing-card-price">3999 UAH</div>
+                        <div class="pricing-card-period">/ month</div>
+                    </div>
+                    
+                    <div class="pricing-card-features">
+                        <div class="pricing-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Everything in Premium plan</span>
+                        </div>
+                        <div class="pricing-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Personalized schedule</span>
+                        </div>
+                        <div class="pricing-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Additional practical projects</span>
+                        </div>
+                        <div class="pricing-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Mock interviews</span>
+                        </div>
+                        <div class="pricing-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Job guarantee</span>
+                        </div>
+                    </div>
+                    
+                    <div class="pricing-card-cta">
+                        <a href="#" class="btn-primary">Choose Plan</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Included Section -->
+    <section class="included-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>What’s Included?</h2>
+                <p>All our students receive a full package of services for effective learning</p>
+            </div>
+            
+            <div class="included-grid">
+                <div class="included-card">
+                    <div class="included-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3 class="included-title">English Lessons (extra fee)</h3>
+                    <p class="included-desc">Additional English classes for IT specialists available at extra cost</p>
+                </div>
+                
+                <div class="included-card">
+                    <div class="included-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="included-title">Regular Tech Checks</h3>
+                    <p class="included-desc">Weekly skill assessments and mentor consultations</p>
+                </div>
+                
+                <div class="included-card">
+                    <div class="included-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3 class="included-title">Partner Company Vacancies</h3>
+                    <p class="included-desc">Exclusive access to job openings from our partner IT companies</p>
+                </div>
+                
+                <div class="included-card">
+                    <div class="included-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="included-title">AI Learning Assistance</h3>
+                    <p class="included-desc">Modern AI tools to enhance the learning process</p>
+                </div>
+                
+                <div class="included-card">
+                    <div class="included-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="included-title">Mock Interviews</h3>
+                    <p class="included-desc">Practice real interviews with IT recruitment specialists</p>
+                </div>
+                
+                <div class="included-card">
+                    <div class="included-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="included-title">Student Community</h3>
+                    <p class="included-desc">An active network of learners and alumni for experience exchange</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Format Section -->
+    <section class="format-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Which Format Suits You?</h2>
+                <p>We offer different learning options for different goals and needs</p>
+            </div>
+            
+            <div class="format-cards">
+                <div class="format-card">
+                    <div class="format-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h3 class="format-title">For Beginners</h3>
+                    <p class="format-desc">Perfect for those just starting their IT journey</p>
+                    <div class="format-features">
+                        <div class="format-feature">
+                            <i class="fas fa-check"></i>
+                            <span>From scratch</span>
+                        </div>
+                        <div class="format-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Gradual workload</span>
+                        </div>
+                        <div class="format-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Extra learning materials</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn-primary">Learn More</a>
+                </div>
+                
+                <div class="format-card">
+                    <div class="format-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3 class="format-title">For Career</h3>
+                    <p class="format-desc">For those who want to gain a new profession and get employed</p>
+                    <div class="format-features">
+                        <div class="format-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Intensive program</span>
+                        </div>
+                        <div class="format-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Practical projects</span>
+                        </div>
+                        <div class="format-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Job assistance</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn-primary">Learn More</a>
+                </div>
+                
+                <div class="format-card">
+                    <div class="format-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="format-title">For Growth</h3>
+                    <p class="format-desc">For professionals who want to deepen knowledge and gain new skills</p>
+                    <div class="format-features">
+                        <div class="format-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Advanced courses</span>
+                        </div>
+                        <div class="format-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Expert knowledge</span>
+                        </div>
+                        <div class="format-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Specializations</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn-primary">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Frequently Asked Questions</h2>
+                <p>We’ve answered the most common questions from our future students</p>
+            </div>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can I pay in installments?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we offer flexible payment terms. You can pay in full with a discount or split the payment into several parts. We also partner with banks to provide education loans.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is there a job guarantee?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We provide a job guarantee for students of the intensive format who successfully complete the course and all practical tasks. If you don’t find a job within 3 months after graduation, we refund 100% of the tuition fee.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can I get a refund?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, you can request a refund within 14 days after the course starts if the format doesn’t suit you or you cannot continue. After this period, refunds are only possible in exceptional cases.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Will I receive a certificate?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, all students who successfully complete the course and pass the final exam receive a certificate. The certificate contains course details, acquired skills, and can be verified by employers via a QR code.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Start Learning?</h2>
+            <p>Choose your plan today and get 15% off your first month</p>
+            <a href="#" class="btn-light">Choose a Learning Plan</a>
+        </div>
+    </section>
+
+    <script>
+        // FAQ functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+        
+        // Animation on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedElements = document.querySelectorAll('.pricing-card, .included-card, .format-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            animatedElements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(30px)';
+                element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+{% endblock content %}

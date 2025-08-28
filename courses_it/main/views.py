@@ -45,3 +45,6 @@ def course_list(request, category_slug=None):
 
 def about_us(request):
     return render(request, 'main/nav_link/about-us.html')
+
+def cost_page(request):
+    return render(request, 'main/nav_link/cost.html')
