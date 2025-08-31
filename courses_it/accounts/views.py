@@ -66,7 +66,7 @@ def register_page(request):
         messages.success(request, "Registration successful! Please log in.")
         return redirect("accounts:login")
 
-    return render(request, "accounts:register")
+    return render(request, "accounts/register.html")
 
 
 def login_page(request):
@@ -82,7 +82,7 @@ def login_page(request):
             messages.error(request, "Invalid email or password")
             return redirect("accounts:login")
 
-    return render(request, "accounts:login")
+    return render(request,  "accounts/login.html")
 
 
 @login_required
