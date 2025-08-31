@@ -56,17 +56,17 @@ def register_page(request):
 
         if password != password2:
             messages.error(request, "Passwords do not match")
-            return redirect("register")
+            return redirect("accounts:register")
 
         if CustomUser.objects.filter(email=email).exists():
             messages.error(request, "This email is already registered")
-            return redirect("register")
+            return redirect("accounts:register")
 
         user = CustomUser.objects.create_user(email=email, password=password)
         messages.success(request, "Registration successful! Please log in.")
-        return redirect("login")
+        return redirect("accounts:login")
 
-    return render(request, "accounts/register.html")
+    return render(request, "accounts:register")
 
 
 def login_page(request):
@@ -77,12 +77,12 @@ def login_page(request):
 
         if user is not None:
             login(request, user)
-            return redirect("dashboard")
+            return redirect("accounts:dashboard")
         else:
             messages.error(request, "Invalid email or password")
-            return redirect("login")
+            return redirect("accounts:login")
 
-    return render(request, "accounts/login.html")
+    return render(request, "accounts:login")
 
 
 @login_required
@@ -92,9 +92,8 @@ def dashboard_page(request):
 
 @login_required
 def logout_page(request):
-    if request.method == "POST":
         logout(request)
-        return redirect("login")
+        return redirect('accounts:login')
       
 
 # class AuthViewSet(viewsets.ViewSet):

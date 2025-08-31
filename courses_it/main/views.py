@@ -43,6 +43,15 @@ def course_list(request, category_slug=None):
                       'is_index_page': False
                   })
 
+def courses_new(request):
+    courses = Course.objects.all()
+    new_courses = Course.objects.order_by('-created_at')[:6]
+
+    return render(request, "main/base.html", {
+        "courses": courses,
+        "new_courses": new_courses,
+    })
+
 def about_us(request):
     return render(request, 'main/nav_link/about-us.html')
 
