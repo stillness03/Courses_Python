@@ -12,10 +12,8 @@ def popular_list(request):
                   })
 
 
-def course_detail(request, slug):
-    course = get_object_or_404(Course,
-                               slug=slug,
-                               available=True)
+def course_detail(request):
+    course = get_object_or_404(Course)
     return render(request,
                   'main/course/detail.html',
                   {
@@ -27,7 +25,7 @@ def course_detail(request, slug):
 def course_list(request, category_slug=None):
     page = request.GET.get('page', 1)
 
-    courses = Course.objects.filter(available=True)
+    courses = Course.objects.filter()
 
     if category_slug:
         courses = courses.filter(category__slug=category_slug)

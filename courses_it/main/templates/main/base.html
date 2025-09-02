@@ -39,69 +39,18 @@
                                 <div class="mega-left">
                                     <h3>All Courses</h3>
                                     <div class="course-types">
-                                        <button class="type-btn active">Technical</button>
-                                        <button class="type-btn">Nontechnical</button>
+                                        <button class="type-btn active" data-type="technical">Technical</button>
+                                        <button class="type-btn" data-type="nontechnical">Nontechnical</button>
                                     </div>
                                     <div class="course-list">
-                                        <!-- Technical -->
-                                        <a href="#" class="course-item">
-                                            <i class="fas fa-laptop-code"></i>
-                                            QA engineer
-                                        </a>
-                                        <a href="#" class="course-item">
-                                            <i class="fas fa-code"></i>
-                                            Python developer
-                                        </a>
-                                        <a href="#" class="course-item">
-                                            <i class="fas fa-desktop"></i>
-                                            Front-end developer
-                                        </a>
-                                        <a href="#" class="course-item">
-                                            <i class="fas fa-layer-group"></i>
-                                            Full-stack developer
-                                        </a>
-                                        <a href="#" class="course-item">
-                                            <i class="fas fa-server"></i>
-                                            DevOps engineer
-                                        </a>
-                                        <a href="#" class="course-item">
-                                            <i class="fab fa-java"></i>
-                                            Java developer
-                                        </a>
-                                        <a href="#" class="course-item">
-                                            <i class="fas fa-cogs"></i>
-                                            Automation QA engineer
-                                        </a>
-                                        
-                                        <!-- Nontechnical -->
-                                        <a href="#" class="course-item">
-                                            <i class="fas fa-chart-bar"></i>
-                                            Data analyst
-                                        </a>
-                                        <a href="#" class="course-item">
-                                            <i class="fas fa-palette"></i>
-                                            UI/UX designer
-                                        </a>
-                                        <a href="#" class="course-item">
-                                            <i class="fas fa-tasks"></i>
-                                            Project manager
-                                        </a>
-                                        <a href="#" class="course-item">
-                                            <i class="fas fa-bullhorn"></i>
-                                            Digital marketer
-                                        </a>
-                                        <a href="#" class="course-item">
-                                            <i class="fas fa-user-tie"></i>
-                                            Recruiter
-                                        </a>
-                                        <a href="#" class="course-item">
-                                            <i class="fas fa-ad"></i>
-                                            PPC manager
-                                        </a>
-                                        <a href="#" class="course-item">
-                                            <i class="fas fa-hashtag"></i>
-                                            SMM manager
-                                        </a>
+                                        {% for course in all_courses %}
+                                            <a href="{% url 'course_detail' course.id %}" class="course-item" data-type="{{ course.type_course }}">
+                                                <i class="{{ course.icon_class }}"></i>
+                                                {{ course.title }}
+                                            </a>
+                                        {% empty %}
+                                            <p>No courses available.</p>
+                                        {% endfor %}
                                     </div>
                                 </div>
                         
@@ -110,18 +59,18 @@
                                     <h3>New Courses</h3>
                                     <div class="popular-courses">
                                         {% for course in new_courses %}
-                                        <a href="/course/{{ course.id }}" class="popular-item">
-                                            <div class="course-image">
-                                                {% if course.image %}
-                                                    <img src="{{ course.image.url }}" alt="{{ course.title }}">
-                                                {% else %}
-                                                    <div class="course-image-placeholder">{{ course.title|slice:":2" }}</div>
-                                                {% endif %}
-                                            </div>
-                                            <span>{{ course.title }}</span>
-                                        </a>
+                                            <a href="{% url 'course_detail' course.id %}" class="popular-item">
+                                                <div class="course-image">
+                                                    {% if course.image %}
+                                                        <img src="{{ course.image.url }}" alt="{{ course.title }}">
+                                                    {% else %}
+                                                        <div class="course-image-placeholder">{{ course.title|slice:":2" }}</div>
+                                                    {% endif %}
+                                                </div>
+                                                <span>{{ course.title }}</span>
+                                            </a>
                                         {% empty %}
-                                        <p>No new courses yet.</p>
+                                            <p>No new courses yet.</p>
                                         {% endfor %}
                                     </div>
                                 </div>
@@ -188,6 +137,21 @@
     </footer>
 
     <script>
+        document.querySelectorAll('.type-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            document.querySelectorAll('.type-btn').forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+        
+            const type = this.dataset.type;
+            document.querySelectorAll('.course-list .course-item').forEach(item => {
+                if (type === 'all' || item.dataset.type === type) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
         // Mobile menu toggle
         document.querySelector('.burger-menu').addEventListener('click', function() {
             document.querySelector('.header-nav').classList.toggle('active');

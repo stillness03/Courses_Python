@@ -1,12 +1,18 @@
 from rest_framework import viewsets, permissions
+from django.views import View
 from .serializers import CourseSerializer, LessonSerializer, QuizSerializer, QuestionSerializer, AnswerSerializer, TopicSerializer
 from .models import Course, Lesson, Quiz, Question, Answer, Topic
 from django.shortcuts import get_object_or_404, render
+from rest_framework.permissions import BasePermission, SAFE_METHODS
 
-
-class IsAdminOrReadOnly:
+class IsAdminOrReadOnly(BasePermission):
     def has_permission(self, request, view):
-        if request.method in permissions.SAFE_METHODS:
+        if request.method in SAFE_METHODS:
+            return True
+        return request.user and request.user.is_superuser
+
+    def has_object_permission(self, request, view, obj):
+        if request.method in SAFE_METHODS:
             return True
         return request.user and request.user.is_superuser
     
@@ -42,28 +48,17 @@ class TopicViewSet(viewsets.ModelViewSet):
 
 
 # HTML Views
+class CourseDetail(View):
+    def get(self, request, course_id):
+        course = get_object_or_404(Course, id=course_id)
+        topics = Topic.objects.filter(course=course).order_by('created_at')
+        total_lessons = Lesson.objects.filter(topic=course).count()
 
-def course_topics(request, course_id):
-    topics = Topic.objects.filter(course_id=course_id).order_by('created_at')
-    course = get_object_or_404(Course, id=course_id)
-    total_lessons = Lesson.objects.filter(topic__course=course).count()
+        avg_salary = "$2500"
 
-    return render(request, 'course_topics.html', {
-        'course': course,
-        'topics': topics,
-        'total_lessons': total_lessons
-    })
-
-def topic_detail(request, topic_id):
-    topic = get_object_or_404(Topic, id=topic_id)
-    lesson_count = topic.lessons.count()
-
-    course = topic.course
-    total_lessons = Lesson.objects.filter(topic__course=course).count()
-
-    return render(request, 'course_detail.html', {
-        'topic': topic,
-        'lesson_count': lesson_count,
-        'total_lessons': total_lessons,
-        'course': course
-    })
+        return render(request, 'courses/course_detail.html', {
+            'course': course,
+            'topics': topics,
+            'total_lessons': total_lessons,
+            'avg_salary': avg_salary
+        })

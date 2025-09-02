@@ -46,7 +46,6 @@ class LogoutView(APIView):
             return Response({"error": f"Invalid refresh token: {str(e)}"}, status=status.HTTP_400_BAD_REQUEST)
 
 
-
 # --- HTML Views ---
 def register_page(request):
     if request.method == "POST":
