@@ -1,0 +1,251 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}{{ course.title }}{% endblock title %}
+
+{% block content %}
+
+<div class="courses-page">
+    <div class="course-header">
+        <div class="container">
+            <h1 class="course-title">{{ course. title}}</h1>
+            <button class="btn-help" title="select learning plan"></button>
+        </div> 
+    </div>
+
+    <!-- Did you know? -->
+    <section class="section did-you-know">
+        <div class="container">
+            <div class="section-header">
+                <h2>Did you know?</h2>
+            </div>
+            <div class="dyk-content">
+                <div class="fact-block">
+                    <div class="fact-text">
+                        <h3>Interesting fact about the {{course. title}} profession</h3>
+                        <p>{{course.fun_fact}}</p>
+                    </div>
+                </div>
+                <div class="statistic-block">
+                    <h3 class="uppercase-text">{{ course. title}} Middle: Salary</h3>
+                    <div class="stats-placeholder">
+                        <h4>{{ avg_salary }}</h4>
+                        <p class="title-salary">Annual salary growth according to DOU</p>
+                        <!-- in this place must be graph -->
+                        <img src="#"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </section>
+
+     <!-- What format is right for you? -->
+    <section class="section learning-formats">
+        <div class="container">
+            <div class="section-header">
+                <h2>What format is right for you?</h2>
+                <p>Choose the option that suits you and start learning today</p>
+            </div>
+            <div class="formats-grid">
+                <!-- Plans -->
+                <div class="pricing-table">
+                    <div class="pricing-header">
+                        <div class="plan-name">Basic</div>
+                        <div class="plan-name">Premium</div>
+                    </div>
+                
+                    <div class="pricing-row">
+                        <div class="feature" title="Employment">Employment</div>
+                        <div class="plan-feature"><span class="check">✔</span></div>
+                        <div class="plan-feature"><span class="check">✔</span></div>
+                    </div>
+                
+                    <div class="pricing-row">
+                        <div class="feature">Mentor support</div>
+                        <div class="plan-feature"><span class="check">✔</span></div>
+                        <div class="plan-feature"><span class="check">✔</span></div>
+                    </div>
+                
+                    <div class="pricing-row">
+                        <div class="feature">Practical assignments</div>
+                        <div class="plan-feature"><span class="check">✔</span></div>
+                        <div class="plan-feature"><span class="check">✔</span></div>
+                    </div>
+                
+                    <div class="pricing-row">
+                        <div class="feature">Community access</div>
+                        <div class="plan-feature"><span class="check">✔</span></div>
+                        <div class="plan-feature"><span class="check">✔</span></div>
+                    </div>
+                
+                    <div class="pricing-row">
+                        <div class="feature">Admission to the course</div>
+                        <div class="plan-feature">Pass the selection process for training</div>
+                        <div class="plan-feature">Start learning immediately after payment</div>
+                    </div>
+                
+                    <div class="pricing-row">
+                        <div class="feature">Duration</div>
+                        <div class="plan-feature">{{ course.duration }}</div>
+                        <div class="plan-feature">{{ course.duration|add:3 }}</div>
+                    </div>
+                
+                    <div class="pricing-row">
+                        <div class="feature">Price</div>
+                        <div class="plan-feature">12% of salary for 3 years</div>
+                        <div class="plan-feature">Fixed price for each course</div>
+                    </div>
+                
+                    <div class="pricing-actions">
+                        <button class="format-btn primary">View Free plan</button>
+                        <button class="format-btn primary">View Premium plan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Course program -->
+    <section class="section course-program">
+        <div class="container">
+            <div class="program-content">
+                <!-- Left part -->
+                <div class="program-main">
+                    <h2>Course program</H2>
+                    
+                    <div class="program-module">
+                        {% for topic in topics %}
+                        <div class="module-header" onclick="toggleModule(this)">
+                            <h3>{{ topic.title }}</h3>
+                            <span class="topics-count">{{ topic.lessons.count }}</span>
+                            <span class="toggle-icon">+</span>
+                        
+                            <div class="content-module" style="display:none;">
+                                <p>{{ topic.content }}</p>
+
+                                {% if forloop.counter <= 3 %}
+                                <button class="btn-try">Try</button>
+                                {% endif %}
+                            
+                                <h4>Lessons</h4>
+                                <ul>
+                                    {% for lesson in topic.lessons.all %}
+                                        <li>{{ lesson.title }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        </div>
+                        <div class="show-all-topics">
+                            <button class="format-btn primary" onclick="showAllTopics()">Show more</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right part -->
+                <div class="program-sidebar">
+                    <div class="stats-cards">
+                        <div class="stat-card purple">
+                            <span class="stat-number">{{ total_lessons }}</span>
+                            <span class="stat-label">Lessons</span>
+                        </div>
+                        <div class="stat-card dark">
+                            <span class="stat-number">{{ course.projects }}</span>
+                            <span class="stat-label">Projects</span>
+                        </div>
+                    </div>
+
+                <div class="advantages-list">
+                    <h3>And:</h3>
+                    <ul>
+                        <li>✔ Quizzes</li>
+                        <li>✔ Task solutions</li>
+                        <li>✔ Tech checks</li>
+                        <li>✔ English lessons</li>
+                        <li>✔ Career module</li>
+                    </ul>
+                </div>  
+            </div>
+        </div>
+    </section>
+    
+    <!-- We are often asked -->
+     <section class="section faq-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>We are often asked</h2>
+                <p>Frequently asked questions about the course</p>
+            </div>
+            <div class="faq-list">
+                {% for faq in course.faqs.all %}
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>{{ faq.question }}</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>{{ faq.answer }}</p>
+                    </div>
+                </div>
+                {% empty %}
+                <!-- Default FAQs if none provided -->
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>What are the requirements to start the course?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Basic computer skills and motivation to learn are required. No prior programming experience is necessary.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>How long does it take to complete the course?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The course takes 3-5 months depending on the chosen format and your pace of learning.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>Do you provide job placement assistance?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we provide career support including CV preparation, interview training, and job placement assistance.</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section> 
+
+
+</div>
+
+<script>
+    function toggleModule(element) {
+        const content = element.nextElementSibling;
+        const icon = element.querySelector('.toggle-icon');
+        
+        content.classList.toggle('active');
+        icon.textContent = content.classList.contains('active') ? '-' : '+';
+    }
+    
+    function toggleFaq(element) {
+        const answer = element.nextElementSibling;
+        const toggle = element.querySelector('.faq-toggle');
+        
+        answer.classList.toggle('active');
+        toggle.textContent = answer.classList.contains('active') ? '-' : '+';
+    }    
+    
+    function showAllTopics() {
+        const hiddenTopics = document.querySelectorAll('.hidden-topic');
+        hiddenTopics.forEach(topic => topic.style.display = 'block'); // показываем скрытые темы
+        document.querySelector('.show-all-topics').style.display = 'none'; // скрываем кнопку
+    }
+</script>
+
+{% endblock content %}              
