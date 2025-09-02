@@ -8,7 +8,7 @@
 <div class="courses-page">
     <div class="course-header">
         <div class="container">
-            <h1 class="course-title">{{ course. title}}</h1>
+            <h1 class="course-title">{{ course.title}}</h1>
             <button class="btn-help" title="select learning plan"></button>
         </div> 
     </div>
@@ -22,12 +22,12 @@
             <div class="dyk-content">
                 <div class="fact-block">
                     <div class="fact-text">
-                        <h3>Interesting fact about the {{course. title}} profession</h3>
-                        <p>{{course.fun_fact}}</p>
+                        <h3>Interesting fact about the {{ course.title }} profession</h3>
+                        <p>{{ course.fun_fact }}</p>
                     </div>
                 </div>
                 <div class="statistic-block">
-                    <h3 class="uppercase-text">{{ course. title}} Middle: Salary</h3>
+                    <h3 class="uppercase-text">{{ course.title}} Middle: Salary</h3>
                     <div class="stats-placeholder">
                         <h4>{{ avg_salary }}</h4>
                         <p class="title-salary">Annual salary growth according to DOU</p>
@@ -228,19 +228,19 @@
     function toggleModule(element) {
         const content = element.nextElementSibling;
         const icon = element.querySelector('.toggle-icon');
-        
+
         content.classList.toggle('active');
         icon.textContent = content.classList.contains('active') ? '-' : '+';
     }
-    
+
     function toggleFaq(element) {
         const answer = element.nextElementSibling;
         const toggle = element.querySelector('.faq-toggle');
-        
+
         answer.classList.toggle('active');
         toggle.textContent = answer.classList.contains('active') ? '-' : '+';
     }    
-    
+
     function showAllTopics() {
         const hiddenTopics = document.querySelectorAll('.hidden-topic');
         hiddenTopics.forEach(topic => topic.style.display = 'block'); // показываем скрытые темы
