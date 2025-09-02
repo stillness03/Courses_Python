@@ -5,7 +5,8 @@ from .views import (
     LessonViewSet, 
     QuizViewSet, 
     QuestionViewSet, 
-    AnswerViewSet
+    AnswerViewSet,
+    TopicViewSet
 )
 
 router = DefaultRouter()
@@ -14,6 +15,7 @@ router.register(r'lessons', LessonViewSet)
 router.register(r'quizzes', QuizViewSet)
 router.register(r'questions', QuestionViewSet)
 router.register(r'answers', AnswerViewSet)
+router.register(r'topic', TopicViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

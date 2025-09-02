@@ -1,0 +1,124 @@
+{% extends "admin_panel/base.html" %}
+{% block title %}Topics{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2>Topics</h2>
+  <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createTopicModal">+ Add Topic</button>
+</div>
+
+<!-- Table Topics-->
+<table class="table table-striped shadow-sm">
+  <thead class="table-dark">
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Lesson</th>
+      <th>Order</th>
+      <th>Created</th>
+    </tr>
+  </thead>
+  <tbody id="topics-table">
+  </tbody>
+</table>
+
+<!-- Modal for created -->
+<div class="modal fade" id="createTopicModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Create Topic</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="create-topic-form">
+          <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input type="text" class="form-control" name="title" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Content</label>
+            <textarea class="form-control" name="content"></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Lesson</label>
+            <select class="form-select" name="lesson" id="lesson-select" required></select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Order</label>
+            <input type="number" class="form-control" name="order" value="1" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  loadTopics();
+  loadLessonsSelect();
+
+  // Load topics into table
+  function loadTopics() {
+    fetch("/api/topics/")
+      .then(res => res.json())
+      .then(data => {
+        const table = document.getElementById("topics-table");
+        table.innerHTML = "";
+        data.forEach(topic => {
+          table.innerHTML += `
+            <tr>
+              <td>${topic.id}</td>
+              <td>${topic.title}</td>
+              <td>${topic.lesson_title || "—"}</td>
+              <td>${topic.order}</td>
+              <td>${new Date(topic.created_at).toLocaleDateString()}</td>
+            </tr>
+          `;
+        });
+      });
+  }
+
+  // Get lessons for select
+  function loadLessonsSelect() {
+    fetch("/api/lessons/")
+      .then(res => res.json())
+      .then(lessons => {
+        const select = document.getElementById("lesson-select");
+        select.innerHTML = "";
+        lessons.forEach(lesson => {
+          select.innerHTML += `<option value="${lesson.id}">${lesson.title}</option>`;
+        });
+      });
+  }
+
+  // Create topic
+  document.getElementById("create-topic-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    const payload = Object.fromEntries(formData.entries());
+
+    fetch("/api/topics/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": window.CSRF_TOKEN
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(res => {
+      if (!res.ok) throw new Error("Failed to create topic");
+      return res.json();
+    })
+    .then(() => {
+      this.reset();
+      loadTopics();
+      bootstrap.Modal.getInstance(document.getElementById("createTopicModal")).hide();
+    })
+    .catch(err => alert(err));
+  });
+});
+</script>
+{% endblock %}

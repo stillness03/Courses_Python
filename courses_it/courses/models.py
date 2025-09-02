@@ -13,8 +13,26 @@ class Course(models.Model):
     def __str__(self):
         return self.title
 
+class ForPageCourse(Course):
+    fun_fact = models.CharField(max_length=255)
+    projects = models.IntegerField(default=0)
+
+    class Meta:
+        verbose_name = "Course (Extended)"
+        verbose_name_plural = "Courses (Extended)"
+
+class Topic(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='topic')
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+
 class Lesson(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lessons')
+    topic = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lessons')
     title = models.CharField(max_length=200)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -46,3 +64,12 @@ class Answer(models.Model):
 
     def __str__(self):
         return f"{self.text} ({'correct' if self.is_correct else 'wrong'})"
+    
+
+class FAQ(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='faqs')
+    question = models.CharField(max_length=255)
+    answer = models.TextField()
+
+    def __str__(self):
+        return f"FAQ: {self.question[:50]}"
