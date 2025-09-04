@@ -7,25 +7,18 @@
 
 <div class="courses-page">
     <div class="course-header">
-        <div class="container">
+        <div class="main-container">
             <h1 class="course-title">{{ course.title}}</h1>
             <button class="btn-help" title="select learning plan"></button>
+            <img class="figma", src="{% static 'img/figma.png' %}" alt="figma">
+            <img class="phone", src="{% static 'img/phone.png' %}" alt="phone">
         </div> 
     </div>
 
     <!-- Did you know? -->
     <section class="section did-you-know">
-        <div class="container">
-            <div class="section-header">
-                <h2>Did you know?</h2>
-            </div>
+        <div class="container-dyk">
             <div class="dyk-content">
-                <div class="fact-block">
-                    <div class="fact-text">
-                        <h3>Interesting fact about the {{ course.title }} profession</h3>
-                        <p>{{ course.fun_fact }}</p>
-                    </div>
-                </div>
                 <div class="statistic-block">
                     <h3 class="uppercase-text">{{ course.title}} Middle: Salary</h3>
                     <div class="stats-placeholder">
@@ -33,6 +26,15 @@
                         <p class="title-salary">Annual salary growth according to DOU</p>
                         <!-- in this place must be graph -->
                         <img src="#"/>
+                    </div>
+                </div>
+                <div class="fact-block">
+                    <div class="header-dyk">
+                        <h2>Did you know?</h2>
+                    </div>
+                    <div class="fact-text">
+                        <h3>Interesting fact about the {{ course.title }} profession</h3>
+                        <p>{{ course.fun_fact }}</p>
                     </div>
                 </div>
             </div>
@@ -44,61 +46,72 @@
         <div class="container">
             <div class="section-header">
                 <h2>What format is right for you?</h2>
-                <p>Choose the option that suits you and start learning today</p>
+                <p><img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f9e0.png" 
+                    alt="brain" class="emoji-3d" />
+                    Choose the option that suits you and start learning today
+                </p>
             </div>
             <div class="formats-grid">
                 <!-- Plans -->
-                <div class="pricing-table">
-                    <div class="pricing-header">
-                        <div class="plan-name">Basic</div>
-                        <div class="plan-name">Premium</div>
-                    </div>
-                
-                    <div class="pricing-row">
-                        <div class="feature" title="Employment">Employment</div>
-                        <div class="plan-feature"><span class="check">✔</span></div>
-                        <div class="plan-feature"><span class="check">✔</span></div>
-                    </div>
-                
-                    <div class="pricing-row">
-                        <div class="feature">Mentor support</div>
-                        <div class="plan-feature"><span class="check">✔</span></div>
-                        <div class="plan-feature"><span class="check">✔</span></div>
-                    </div>
-                
-                    <div class="pricing-row">
-                        <div class="feature">Practical assignments</div>
-                        <div class="plan-feature"><span class="check">✔</span></div>
-                        <div class="plan-feature"><span class="check">✔</span></div>
-                    </div>
-                
-                    <div class="pricing-row">
-                        <div class="feature">Community access</div>
-                        <div class="plan-feature"><span class="check">✔</span></div>
-                        <div class="plan-feature"><span class="check">✔</span></div>
-                    </div>
-                
-                    <div class="pricing-row">
-                        <div class="feature">Admission to the course</div>
-                        <div class="plan-feature">Pass the selection process for training</div>
-                        <div class="plan-feature">Start learning immediately after payment</div>
-                    </div>
-                
-                    <div class="pricing-row">
-                        <div class="feature">Duration</div>
-                        <div class="plan-feature">{{ course.duration }}</div>
-                        <div class="plan-feature">{{ course.duration|add:3 }}</div>
-                    </div>
-                
-                    <div class="pricing-row">
-                        <div class="feature">Price</div>
-                        <div class="plan-feature">12% of salary for 3 years</div>
-                        <div class="plan-feature">Fixed price for each course</div>
-                    </div>
-                
-                    <div class="pricing-actions">
-                        <button class="format-btn primary">View Free plan</button>
-                        <button class="format-btn primary">View Premium plan</button>
+                <div class="content">
+                    <div class="pricing-table">
+                        <div class="pricing-header">
+                            <div class="plan-name">Features</div>
+                            <div class="plan-name">Basic</div>
+                            <div class="plan-name">Premium</div>
+                        </div>
+                    
+                        <div class="pricing-row">
+                            <div class="feature" title="Employment">Employment</div>
+                            <div class="plan-feature"><span class="check">✔</span></div>
+                            <div class="plan-feature"><span class="check">✔</span></div>
+                        </div>
+                    
+                        <div class="pricing-row">
+                            <div class="feature">Mentor support</div>
+                            <div class="plan-feature"><span class="check">✔</span></div>
+                            <div class="plan-feature"><span class="check">✔</span></div>
+                        </div>
+                    
+                        <div class="pricing-row">
+                            <div class="feature">Practical assignments</div>
+                            <div class="plan-feature"><span class="check">✔</span></div>
+                            <div class="plan-feature"><span class="check">✔</span></div>
+                        </div>
+                    
+                        <div class="pricing-row">
+                            <div class="feature">Community access</div>
+                            <div class="plan-feature"><span class="check">✔</span></div>
+                            <div class="plan-feature"><span class="check">✔</span></div>
+                        </div>
+                    
+                        <div class="pricing-row">
+                            <div class="feature">Admission to the course</div>
+                            <div class="plan-feature">Pass the selection process for training</div>
+                            <div class="plan-feature">Start learning immediately after payment</div>
+                        </div>
+                    
+                        <div class="pricing-row">
+                            <div class="feature">Duration</div>
+                            <div class="plan-feature">{{ course.duration }} months</div>
+                            <div class="plan-feature">{{ course.duration|add:3 }} month</div>
+                        </div>
+                    
+                        <div class="pricing-row">
+                            <div class="feature">Price</div>
+                            <div class="plan-feature">12% of salary for 3 years</div>
+                            <div class="plan-feature">Fixed price for each course</div>
+                        </div>
+                    
+                        <div class="pricing-actions">
+                             <div class="test-helper">
+                                <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f468-1f4bb.png" 
+                                alt="developer" class="emoji-3d" />
+                                <p>Take the test to find your perfect plan!</p>
+                            </div>
+                            <button class="format-btn primary">View Free plan</button>
+                            <button class="format-btn primary">View Premium plan</button>
+                        </div>
                     </div>
                 </div>
             </div>
