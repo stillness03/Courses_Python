@@ -29,7 +29,7 @@ class LessonSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Lesson
-        fields = ["id", "title", "content", "order", "quizzes", "created_at", "updated_at"]
+        fields = "__all__"
         read_only_fields = ["created_at", "updated_at"]
 
 
@@ -38,7 +38,7 @@ class TopicSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Topic
-        fields = ["id", "title", "content", "lessons", "created_at", "updated_at"]
+        fields = "__all__"
 
 
 class CourseSerializer(serializers.ModelSerializer):

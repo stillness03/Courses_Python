@@ -52,8 +52,7 @@ class CourseDetail(View):
     def get(self, request, course_id):
         course = get_object_or_404(Course, id=course_id)
         topics = Topic.objects.filter(course=course).order_by('created_at')
-        total_lessons = Lesson.objects.filter(topic=course).count()
-
+        total_lessons = Lesson.objects.filter(topic__course=course).count()
         avg_salary = "$2500"
 
         return render(request, 'courses/course_detail.html', {

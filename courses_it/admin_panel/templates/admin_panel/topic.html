@@ -13,8 +13,7 @@
     <tr>
       <th>ID</th>
       <th>Title</th>
-      <th>Lesson</th>
-      <th>Order</th>
+      <th>Course</th>
       <th>Created</th>
     </tr>
   </thead>
@@ -41,12 +40,8 @@
             <textarea class="form-control" name="content"></textarea>
           </div>
           <div class="mb-3">
-            <label class="form-label">Lesson</label>
-            <select class="form-select" name="lesson" id="lesson-select" required></select>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Order</label>
-            <input type="number" class="form-control" name="order" value="1" required>
+            <label class="form-label">Course</label>
+            <select class="form-select" name="course" id="course" required></select>
           </div>
           <button type="submit" class="btn btn-primary">Create</button>
         </form>
@@ -58,7 +53,7 @@
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   loadTopics();
-  loadLessonsSelect();
+  loadCoursesSelect();
 
   // Load topics into table
   function loadTopics() {
@@ -72,8 +67,8 @@ document.addEventListener("DOMContentLoaded", () => {
             <tr>
               <td>${topic.id}</td>
               <td>${topic.title}</td>
-              <td>${topic.lesson_title || "—"}</td>
-              <td>${topic.order}</td>
+              <td>${topic.course || "—"}</td>
+              <td>${topic.content}</td>
               <td>${new Date(topic.created_at).toLocaleDateString()}</td>
             </tr>
           `;
@@ -82,30 +77,36 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Get lessons for select
-  function loadLessonsSelect() {
-    fetch("/api/lessons/")
+  function loadCoursesSelect() {
+    const select = document.getElementById("course");
+    if (!select) return;
+
+    fetch("/api/courses/")
       .then(res => res.json())
-      .then(lessons => {
-        const select = document.getElementById("lesson-select");
+      .then(courses => {
+        const select = document.getElementById("course");
         select.innerHTML = "";
-        lessons.forEach(lesson => {
-          select.innerHTML += `<option value="${lesson.id}">${lesson.title}</option>`;
+        courses.forEach(course => {
+          select.innerHTML += `<option value="${course.id}">${course.title}</option>`;
         });
       });
   }
 
   // Create topic
-  document.getElementById("create-topic-form").addEventListener("submit", function(e) {
-    e.preventDefault();
-    const formData = new FormData(this);
-    const payload = Object.fromEntries(formData.entries());
+document.getElementById("create-topic-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      const payload = Object.fromEntries(formData.entries());
 
-    fetch("/api/topics/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-CSRFToken": window.CSRF_TOKEN
-      },
+      payload.order = parseInt(payload.order);
+      payload.course = parseInt(payload.course);
+
+      fetch("/api/topics/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": window.CSRF_TOKEN
+        },
       body: JSON.stringify(payload)
     })
     .then(res => {
@@ -115,7 +116,10 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(() => {
       this.reset();
       loadTopics();
-      bootstrap.Modal.getInstance(document.getElementById("createTopicModal")).hide();
+      const modalEl = document.getElementById("createTopicModal");
+      bootstrap.Modal.getInstance(modalEl).hide();
+
+      document.querySelector('[data-bs-target="#createTopicModal"]').focus();
     })
     .catch(err => alert(err));
   });

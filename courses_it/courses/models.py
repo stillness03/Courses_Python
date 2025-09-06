@@ -22,7 +22,7 @@ class ForPageCourse(Course):
         verbose_name_plural = "Courses (Extended)"
 
 class Topic(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='topic')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='topics')
     title = models.CharField(max_length=200)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -32,7 +32,8 @@ class Topic(models.Model):
         return self.title
 
 class Lesson(models.Model):
-    topic = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lessons')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lessons')
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='lessons')
     title = models.CharField(max_length=200)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
