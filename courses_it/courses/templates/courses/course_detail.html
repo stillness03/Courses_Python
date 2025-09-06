@@ -34,7 +34,7 @@
                     </div>
                     <div class="fact-text">
                         <h3>Interesting fact about the {{ course.title }} profession</h3>
-                        <p>{{ course.fun_fact }}</p>
+                        <p>{{ forpagecourse.fun_fact }}</p>
                     </div>
                 </div>
             </div>
@@ -163,21 +163,23 @@
                             <span class="stat-label">Lessons</span>
                         </div>
                         <div class="stat-card dark">
-                            <span class="stat-number">{{ course.projects }}</span>
+                            <span class="stat-number">{{ forpagecourse.projects }}</span>
                             <span class="stat-label">Projects</span>
                         </div>
                     </div>
-
-                <div class="advantages-list">
-                    <h3>And:</h3>
-                    <ul>
-                        <li>✔ Quizzes</li>
-                        <li>✔ Task solutions</li>
-                        <li>✔ Tech checks</li>
-                        <li>✔ English lessons</li>
-                        <li>✔ Career module</li>
-                    </ul>
-                </div>  
+                
+                
+                    <div class="advantages-list">
+                        <h3>And also:</h3>
+                        <ul>
+                            <li>✔ Quizzes</li>
+                            <li>✔ Task solutions</li>
+                            <li>✔ Tech checks</li>
+                            <li>✔ English lessons</li>
+                            <li>✔ Career module</li>
+                        </ul>
+                    </div>
+                </div> 
             </div>
         </div>
     </section>
