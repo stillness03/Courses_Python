@@ -1,7 +1,7 @@
 from rest_framework import viewsets, permissions
 from django.views import View
 from .serializers import CourseSerializer, LessonSerializer, QuizSerializer, QuestionSerializer, AnswerSerializer, TopicSerializer
-from .models import Course, Lesson, Quiz, Question, Answer, Topic
+from .models import Course, Lesson, Quiz, Question, Answer, Topic, ForPageCourse
 from django.shortcuts import get_object_or_404, render
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 
@@ -51,6 +51,7 @@ class TopicViewSet(viewsets.ModelViewSet):
 class CourseDetail(View):
     def get(self, request, course_id):
         course = get_object_or_404(Course, id=course_id)
+        forpagecourse = ForPageCourse.objects.filter(pk=course.pk).first()
         topics = Topic.objects.filter(course=course).order_by('created_at')
         total_lessons = Lesson.objects.filter(topic__course=course).count()
         avg_salary = "$2500"
@@ -58,6 +59,7 @@ class CourseDetail(View):
         return render(request, 'courses/course_detail.html', {
             'course': course,
             'topics': topics,
+            "forpagecourse": forpagecourse,
             'total_lessons': total_lessons,
             'avg_salary': avg_salary
         })
