@@ -21,9 +21,45 @@
       <th>Actions</th>
     </tr>
   </thead>
-  <tbody id="courses-table-body">
-  </tbody>
+  <tbody id="courses-table-body"></tbody>
 </table>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2>ForPageCourse</h2>
+  <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createFPCModal">+ Add ForPageCourse</button>
+</div>
+
+<!-- Table with ForPageCourse -->
+<table class="table table-striped table-hover">
+  <thead class="table-dark">
+    <tr>
+      <th>ID</th>
+      <th>Course</th>
+      <th>Fun Fact</th>
+      <th>Projects</th>
+    </tr>
+  </thead>
+  <tbody id="fpc-table-body"></tbody>
+</table>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2>FAQ</h2>
+  <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createFAQModal">+ Add FAQ</button>
+</div>
+
+<!-- Table with FAQ -->
+<table class="table table-striped table-hover">
+  <thead class="table-dark">
+    <tr>
+      <th>ID</th>
+      <th>Course</th>
+      <th>Question</th>
+      <th>Answer</th>
+    </tr>
+  </thead>
+  <tbody id="faq-table-body"></tbody>
+</table>
+
 
 <!-- Modal for creating course -->
 <div class="modal fade" id="createCourseModal" tabindex="-1" aria-hidden="true">
@@ -74,6 +110,64 @@
   </div>
 </div>
 
+<!-- ForPageCourse Modal -->
+<div class="modal fade" id="createFPCModal" tabindex="-1">
+  <div class="modal-dialog">
+    <form id="createFPCForm" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Create ForPageCourse</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="fpcCourse">Course</label>
+          <select name="course" id="fpcCourse" class="form-select" required></select>
+        </div>
+        <div class="mb-3">
+          <label>Fun fact</label>
+          <input type="text" name="fun_fact" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label>Projects</label>
+          <input type="number" name="projects" class="form-control" required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- FAQ Modal -->
+<div class="modal fade" id="createFAQModal" tabindex="-1">
+  <div class="modal-dialog">
+    <form id="createFAQForm" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Create FAQ</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="faqCourse">Course</label>
+          <select name="course" id="faqCourse" class="form-select" required></select>
+        </div>
+        <div class="mb-3">
+          <label>Question</label>
+          <input type="text" name="question" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label>Answer</label>
+          <textarea name="answer" class="form-control" required></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <script>
 // CSRF token for Django
 const CSRF_TOKEN = "{{ csrf_token }}";
@@ -111,6 +205,67 @@ async function loadCourses() {
     console.error('Error loading courses:', error);
     alert('Error loading courses: ' + error.message);
   }
+}
+
+async function populateCourseSelect(selectId) {
+  try {
+    const response = await fetch("/api/courses/");
+    if (!response.ok) throw new Error("Failed to fetch courses");
+    const courses = await response.json();
+
+    const select = document.getElementById(selectId);
+    select.innerHTML = "<option value='' disabled selected>Choose course</option>";
+    courses.forEach(c => {
+      select.insertAdjacentHTML("beforeend",
+        `<option value="${c.id}">${c.title}</option>`);
+    });
+  } catch (err) {
+    console.error("Error loading courses for select:", err);
+  }
+}
+
+// Load FAQ
+async function loadFAQs() {
+  const res = await fetch("/api/faqs/");
+  const data = await res.json();
+  const tbody = document.getElementById("faq-table-body");
+  tbody.innerHTML = "";
+  data.forEach(f => {
+    tbody.insertAdjacentHTML("beforeend", `
+      <tr>
+        <td>${f.id}</td>
+        <td>${f.course || "—"}</td>
+        <td>${f.question}</td>
+        <td>${f.answer}</td>
+        <td>
+          <button class="btn btn-sm btn-warning me-1" onclick="editFAQ(${f.id})">Edit</button>
+          <button class="btn btn-sm btn-danger" onclick="deleteFAQ(${f.id})">Delete</button>
+        </td>
+      </tr>
+    `);
+  });
+}
+
+// Load FPC
+async function loadFPC() {
+  const res = await fetch("/api/forpagecourses/");
+  const data = await res.json();
+  const tbody = document.getElementById("fpc-table-body");
+  tbody.innerHTML = "";
+  data.forEach(fpc => {
+    tbody.insertAdjacentHTML("beforeend", `
+      <tr>
+        <td>${fpc.id}</td>
+        <td>${fpc.course || "—"}</td>
+        <td>${fpc.fun_fact}</td>
+        <td>${fpc.projects}</td>
+        <td>
+          <button class="btn btn-sm btn-warning me-1" onclick="editFPC(${fpc.id})">Edit</button>
+          <button class="btn btn-sm btn-danger" onclick="deleteFPC(${fpc.id})">Delete</button>
+        </td>
+      </tr>
+    `);
+  });
 }
 
 // Handle create form
@@ -163,6 +318,57 @@ document.getElementById("createCourseForm").addEventListener("submit", async fun
   }
 });
 
+
+// Create FAQ
+document.getElementById("createFAQForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const form = new FormData(e.target);
+  await fetch("/api/faqs/", {
+    method: "POST",
+    headers: {"X-CSRFToken": CSRF_TOKEN},
+    body: form
+  });
+  bootstrap.Modal.getInstance(document.getElementById("createFAQModal")).hide();
+  loadFAQs();
+});
+
+// Create FPC
+document.getElementById("createFPCForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+
+  const body = {
+    course: parseInt(formData.get("course")),
+    fun_fact: formData.get("fun_fact"),
+    projects: parseInt(formData.get("projects"))
+  };
+
+  try {
+    const res = await fetch("/api/forpagecourses/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": CSRF_TOKEN
+      },
+      body: JSON.stringify(body)
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      console.error("Error:", err);
+      alert("Erorr when u try created ForPageCourse: " + JSON.stringify(err));
+      return;
+    }
+
+    bootstrap.Modal.getInstance(document.getElementById("createFPCModal")).hide();
+    e.target.reset();
+    loadFPC();
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Error with conection: " + error.message);
+  }
+});
+
 // Edit course function
 function editCourse(courseId) {
   alert('Edit functionality for course ' + courseId + ' will be implemented here');
@@ -193,9 +399,35 @@ async function deleteCourse(courseId) {
   }
 }
 
+async function deleteFAQ(id) {
+  await fetch(`/api/faqs/${id}/`, {
+    method: "DELETE",
+    headers: {"X-CSRFToken": CSRF_TOKEN}
+  });
+  loadFAQs();
+}
+
+async function deleteFPC(id) {
+  await fetch(`/api/forpagecourses/${id}/`, {
+    method: "DELETE",
+    headers: {"X-CSRFToken": CSRF_TOKEN}
+  });
+  loadFPC();
+}
+
+
+
 // Load courses on page load
 document.addEventListener("DOMContentLoaded", function() {
   loadCourses();
+  loadFAQs();
+  loadFPC();
+
+  document.getElementById("createFAQModal")
+    .addEventListener("show.bs.modal", () => populateCourseSelect("faqCourse"));
+
+  document.getElementById("createFPCModal")
+    .addEventListener("show.bs.modal", () => populateCourseSelect("fpcCourse"));
 });
 </script>
 

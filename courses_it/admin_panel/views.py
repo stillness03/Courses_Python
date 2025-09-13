@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.shortcuts import render
-from courses.models import Course, Lesson, Quiz, Topic
+from courses.models import FAQ, Course, ForPageCourse, Lesson, Quiz, Topic
 from accounts.models import CustomUser
 from payment.models import Purchase
 
@@ -16,7 +16,11 @@ def admin_dashboard(request):
 @admin_required
 def admin_courses(request):
     courses = Course.objects.all()
-    return render(request, "admin_panel/courses.html", {"courses": courses})
+    forcourse = ForPageCourse.objects.all()
+    faq = FAQ.objects.all()
+    return render(request, "admin_panel/courses.html", {"courses": courses,
+                                                        "forcourse": forcourse,
+                                                        "faq": faq})
 
 @admin_required
 def admin_topic(request):

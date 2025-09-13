@@ -12,34 +12,29 @@ def popular_list(request):
                   })
 
 
-def course_detail(request):
-    course = get_object_or_404(Course)
-    return render(request,
-                  'main/course/detail.html',
-                  {
-                      'course': course,
-                      'is_index_page': False
-                  })
+def course_detail(request, slug):
+    course = get_object_or_404(Course, slug=slug)
+    return render(request, "courses/course_detail.html", {"course": course})
 
 
-def course_list(request, category_slug=None):
-    page = request.GET.get('page', 1)
+#def course_list(request, category_slug=None):
+#   page = request.GET.get('page', 1)
 
-    courses = Course.objects.filter()
+#   courses = Course.objects.filter()
 
-    if category_slug:
-        courses = courses.filter(category__slug=category_slug)
+#   if category_slug:
+#         courses = courses.filter(category__slug=category_slug)
 
-    paginator = Paginator(courses, 10)
-    current_page = paginator.get_page(page)
+#   paginator = Paginator(courses, 10)
+#   current_page = paginator.get_page(page)
 
-    return render(request,
-                  'main/course/list.html',
-                  {
-                      'category_slug': category_slug,
-                      'courses': current_page,
-                      'is_index_page': False
-                  })
+#    return render(request,
+#                 'main/course/list.html',
+#                 {
+#                     'category_slug': category_slug,
+#                     'courses': current_page,
+#                     'is_index_page': False
+#                 })
 
 def courses_new(request):
     courses = Course.objects.all()

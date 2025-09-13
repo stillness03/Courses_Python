@@ -1,7 +1,7 @@
 from rest_framework import viewsets, permissions
 from django.views import View
-from .serializers import CourseSerializer, LessonSerializer, QuizSerializer, QuestionSerializer, AnswerSerializer, TopicSerializer
-from .models import Course, Lesson, Quiz, Question, Answer, Topic, ForPageCourse
+from .serializers import CourseSerializer, FAQSerializer, ForPageCourseSerializer, LessonSerializer, QuizSerializer, QuestionSerializer, AnswerSerializer, TopicSerializer
+from .models import FAQ, Course, Lesson, Quiz, Question, Answer, Topic, ForPageCourse
 from django.shortcuts import get_object_or_404, render
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 
@@ -44,6 +44,16 @@ class AnswerViewSet(viewsets.ModelViewSet):
 class TopicViewSet(viewsets.ModelViewSet):
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAdminOrReadOnly]
+
+class ForPageCourseViewSet(viewsets.ModelViewSet):
+    queryset = ForPageCourse.objects.all()
+    serializer_class = ForPageCourseSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAdminOrReadOnly]
+
+class FAQViewSet(viewsets.ModelViewSet):
+    queryset = FAQ.objects.all()
+    serializer_class = FAQSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAdminOrReadOnly]
 
 

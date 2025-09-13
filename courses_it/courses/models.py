@@ -20,13 +20,15 @@ class Course(models.Model):
     def __str__(self):
         return self.title
 
-class ForPageCourse(Course):
+class ForPageCourse(models.Model):
+    course = models.OneToOneField(Course, on_delete=models.CASCADE, related_name="extended_info", null=True, blank=True)
     fun_fact = models.CharField(max_length=255)
     projects = models.IntegerField(default=0)
 
     class Meta:
         verbose_name = "Course (Extended)"
         verbose_name_plural = "Courses (Extended)"
+
 
 class Topic(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='topics')

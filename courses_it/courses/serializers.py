@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Course, Lesson, Quiz, Question, Answer, Topic
+from .models import FAQ, Course, ForPageCourse, Lesson, Quiz, Question, Answer, Topic
 
 class AnswerSerializer(serializers.ModelSerializer):
     class Meta:
@@ -52,3 +52,14 @@ class CourseSerializer(serializers.ModelSerializer):
             "topics", "created_at", "updated_at"
         ]
         read_only_fields = ["created_at", "updated_at"]
+
+        
+class ForPageCourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ForPageCourse
+        fields = "__all__"
+
+class FAQSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FAQ
+        fields = "__all__"
