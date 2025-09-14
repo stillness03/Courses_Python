@@ -45,7 +45,7 @@
                                     </div>
                                     <div class="course-list">
                                         {% for course in all_courses %}
-                                            <a href="{% url 'course_detail' course.id %}" class="course-item" data-type="{{ course.type_course }}">
+                                            <a href="{% url 'course_detail' course.slug %}" class="course-item" data-type="{{ course.type_course }}">
                                                 <i class="{{ course.icon_class }}"></i>
                                                 {{ course.title }}
                                             </a>
@@ -60,7 +60,7 @@
                                     <h3>New Courses</h3>
                                     <div class="popular-courses">
                                         {% for course in new_courses %}
-                                            <a href="{% url 'course_detail' course.id %}" class="popular-item">
+                                            <a href="{% url 'course_detail' course.slug %}" class="popular-item">
                                                 <div class="course-image">
                                                     {% if course.image %}
                                                         <img src="{{ course.image.url }}" alt="{{ course.title }}">

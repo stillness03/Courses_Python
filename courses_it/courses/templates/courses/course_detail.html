@@ -20,7 +20,7 @@
         <div class="container-dyk">
             <div class="dyk-content">
                 <div class="statistic-block">
-                    <h3 class="uppercase-text">{{ course.title}} Middle: Salary</h3>
+                    <h3 class="uppercase-text">{{ course.title }} Middle: Salary</h3>
                     <div class="stats-placeholder">
                         <h4>{{ avg_salary }}</h4>
                         <p class="title-salary">Annual salary growth according to DOU</p>
@@ -34,7 +34,11 @@
                     </div>
                     <div class="fact-text">
                         <h3>Interesting fact about the {{ course.title }} profession</h3>
-                        <p>{{ forpagecourse.fun_fact }}</p>
+                        {% if forpagecourse %}
+                            <p>{{ forpagecourse.fun_fact }}</p>
+                        {% else %}
+                            <p>No extended info for this course</p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -130,23 +134,25 @@
                         {% for topic in topics %}
                         <div class="module-header" onclick="toggleModule(this)">
                             <h3>{{ topic.title }}</h3>
-                            <span class="topics-count">{{ topic.lessons.count }}</span>
+                            <span class="topics-count">{{ topic.lessons.count }} topics</span>
                             <span class="toggle-icon">+</span>
+                        </div>
                         
-                            <div class="content-module" style="display:none;">
-                                <p>{{ topic.content }}</p>
-
-                                {% if forloop.counter <= 3 %}
+                        <div class="content-module" style="display:none;">
+                            <p class="conntent-topic">{{ topic.content }}</p>
+                        
+                            {% if forloop.counter <= 3 %}
                                 <button class="btn-try">Try</button>
-                                {% endif %}
-                            
-                                <h4>Lessons</h4>
-                                <ul>
-                                    {% for lesson in topic.lessons.all %}
-                                        <li>{{ lesson.title }}</li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
+                            {% endif %}
+                        
+                            <h4>Lessons</h4>
+                            <ul>
+                                {% for lesson in topic.lessons.all %}
+                                    <li>{{ lesson.title }}</li>
+                                {% empty %}
+                                    <li>No lessons</li>
+                                {% endfor %}
+                            </ul>
                         </div>
                         {% endfor %}
                         </div>
@@ -240,21 +246,35 @@
 </div>
 
 <script>
-    function toggleModule(element) {
-        const content = element.nextElementSibling;
-        const icon = element.querySelector('.toggle-icon');
-
-        content.classList.toggle('active');
-        icon.textContent = content.classList.contains('active') ? '-' : '+';
+    function toggleModule(header) {
+        const content = header.nextElementSibling; 
+        const icon = header.querySelector(".toggle-icon");
+        
+        if (content.style.display === "none" || content.style.display === "") {
+            content.style.display = "block";
+            icon.textContent = "−"; 
+        } else {
+            content.style.display = "none";
+            icon.textContent = "+"; 
+        }
     }
 
-    function toggleFaq(element) {
-        const answer = element.nextElementSibling;
-        const toggle = element.querySelector('.faq-toggle');
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('.faq-question').forEach(function(q) {
+        q.addEventListener('click', function () {
+          const answer = q.nextElementSibling;
+          const toggle = q.querySelector('.faq-toggle');
 
-        answer.classList.toggle('active');
-        toggle.textContent = answer.classList.contains('active') ? '-' : '+';
-    }    
+          if (!answer) {
+            console.warn('FAQ: nextElementSibling not found for', q);
+            return;
+          }
+
+          answer.classList.toggle('active');
+          toggle.textContent = answer.classList.contains('active') ? '−' : '+';
+        });
+      });
+    });     
 
     function showAllTopics() {
         const hiddenTopics = document.querySelectorAll('.hidden-topic');

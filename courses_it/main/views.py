@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.views import View
 from courses.models import Course
 from django.core.paginator import Paginator
 
@@ -50,3 +51,22 @@ def about_us(request):
 
 def cost_page(request):
     return render(request, 'main/nav_link/cost.html')
+
+class CourseDetail(View):
+    def get(self, request, slug):
+        course = get_object_or_404(Course, slug=slug)
+
+        forpagecourse = getattr(course, 'extended_info', None)
+
+        topics = course.topics.all().order_by('created_at')
+        total_lessons = course.lessons.count()
+
+        avg_salary = "$2500"
+
+        return render(request, 'courses/course_detail.html', {
+            'course': course,
+            'topics': topics,
+            'forpagecourse': forpagecourse,
+            'total_lessons': total_lessons,
+            'avg_salary': avg_salary
+        })

@@ -61,15 +61,19 @@ class FAQViewSet(viewsets.ModelViewSet):
 class CourseDetail(View):
     def get(self, request, course_id):
         course = get_object_or_404(Course, id=course_id)
-        forpagecourse = ForPageCourse.objects.filter(pk=course.pk).first()
-        topics = Topic.objects.filter(course=course).order_by('created_at')
-        total_lessons = Lesson.objects.filter(topic__course=course).count()
+
+        forpagecourse = getattr(course, 'extended_info', None)
+
+        topics = course.topics.all().order_by('created_at')
+        print(topics)
+        total_lessons = course.lessons.count()
+
         avg_salary = "$2500"
 
         return render(request, 'courses/course_detail.html', {
             'course': course,
             'topics': topics,
-            "forpagecourse": forpagecourse,
+            'forpagecourse': forpagecourse,
             'total_lessons': total_lessons,
             'avg_salary': avg_salary
         })
