@@ -46,6 +46,20 @@ def courses_new(request):
         "new_courses": new_courses,
     })
 
+# in future i addad it
+# def stats_view(request):
+#     students_count = Student.objects.count()
+#     mentors_count = Mentor.objects.count()
+#     courses_count = Course.objects.count()
+#     completion_rate = 96  
+
+#     return render(request, "stats.html", {
+#         "students_count": students_count,
+#         "mentors_count": mentors_count,
+#         "courses_count": courses_count,
+#         "completion_rate": completion_rate,
+#     })
+
 def about_us(request):
     return render(request, 'main/nav_link/about-us.html')
 

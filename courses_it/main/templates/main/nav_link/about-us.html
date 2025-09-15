@@ -65,7 +65,7 @@
                         <h3 class="member-name_about">Michael Chen</h3>
                         <p class="member-role_about">Lead Developer</p>
                         <p class="member-desc_about">Michael brings technical expertise and ensures our platform delivers a seamless learning experience.</p>
-                        <div class="social-links">
+                        <div class="social-links_about">
                             <a href="#"><i class="fab fa-linkedin-in"></i></a>
                             <a href="#"><i class="fab fa-twitter"></i></a>
                             <a href="#"><i class="fab fa-github"></i></a>
@@ -105,7 +105,7 @@
                 <!-- Value 1 -->
                 <div class="value-card_about">
                     <div class="value-icon_about">
-                        <i class="fas fa-graduation-cap_about"></i>
+                        <i class="fas fa-graduation-cap"></i>
                     </div>
                     <h3 class="value-title_about">Quality Education</h3>
                     <p class="value-desc_about">We're committed to providing the highest quality education that prepares you for real-world challenges.</p>
@@ -114,7 +114,7 @@
                 <!-- Value 2 -->
                 <div class="value-card_about">
                     <div class="value-icon_about">
-                        <i class="fas fa-users_about"></i>
+                        <i class="fas fa-users"></i>
                     </div>
                     <h3 class="value-title_about">Community Focus</h3>
                     <p class="value-desc_about">We believe in the power of community and collaborative learning to help everyone succeed.</p>
@@ -136,6 +136,13 @@
     <section class="stat_abouts">
         <div class="container_about">
             <div class="stats-grid_about">
+                
+                <!-- In future i addad it --> 
+                <!-- <span class="stat-number" id="students-count" data-value="{{ students_count }}">0</span>
+                <span class="stat-number" id="completion-rate" data-value="{{ completion_rate }}">0</span>
+                <span class="stat-number" id="mentors-count" data-value="{{ mentors_count }}">0</span>
+                <span class="stat-number" id="courses-count" data-value="{{ courses_count }}">0</span> -->
+
                 <div class="stat-item_about">
                     <span class="stat-number" id="students-count">0</span>
                     <span class="stat-label">Students Enrolled</span>
@@ -186,7 +193,16 @@
             });
 
             // Animate stats counters
-            const studentsCount = document.getElementById('students-count');
+            
+            // In future i addad it
+            // function animateAll() {
+            //     animateValue(studentsCount, 0, parseInt(studentsCount.dataset.value), 2000);
+            //     animateValue(completionRate, 0, parseInt(completionRate.dataset.value), 2000);
+            //     animateValue(mentorsCount, 0, parseInt(mentorsCount.dataset.value), 2000);
+            //     animateValue(coursesCount, 0, parseInt(coursesCount.dataset.value), 2000);
+            //     }
+
+            const studentsCount = document.getElementById('students-count'); 
             const completionRate = document.getElementById('completion-rate');
             const mentorsCount = document.getElementById('mentors-count');
             const coursesCount = document.getElementById('courses-count');
@@ -211,6 +227,10 @@
                         animateValue(completionRate, 0, 96, 2000);
                         animateValue(mentorsCount, 0, 300, 2000);
                         animateValue(coursesCount, 0, 50, 2000);
+                    
+                        entry.target.querySelectorAll('.stat-item_about, .stat-item')
+                            .forEach(item => item.classList.add('animate'));
+                    
                         statsObserver.unobserve(entry.target);
                     }
                 });

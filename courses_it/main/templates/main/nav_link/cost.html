@@ -286,43 +286,23 @@
             
             <div class="faq-container">
                 <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Can I pay in installments?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Yes, we offer flexible payment terms. You can pay in full with a discount or split the payment into several parts. We also partner with banks to provide education loans.</p>
-                    </div>
+                  <div class="faq-question"><span>Can I pay in installments?</span><i class="fas fa-chevron-down"></i></div>
+                  <div class="faq-answer"><p>Yes, we offer flexible payment terms. You can pay in full with a discount or split the payment into several parts. We also partner with banks to provide education loans.</p></div>
                 </div>
-                
+
                 <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Is there a job guarantee?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>We provide a job guarantee for students of the intensive format who successfully complete the course and all practical tasks. If you don’t find a job within 3 months after graduation, we refund 100% of the tuition fee.</p>
-                    </div>
+                  <div class="faq-question"><span>Is there a job guarantee?</span><i class="fas fa-chevron-down"></i></div>
+                  <div class="faq-answer" ><p>We provide a job guarantee for students of the intensive format who successfully complete the course and all practical tasks. If you don’t find a job within 3 months after graduation, we refund 100% of the tuition fee.</p></div>
                 </div>
-                
+            
                 <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Can I get a refund?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Yes, you can request a refund within 14 days after the course starts if the format doesn’t suit you or you cannot continue. After this period, refunds are only possible in exceptional cases.</p>
-                    </div>
+                  <div class="faq-question"><span>Can I get a refund?</span><i class="fas fa-chevron-down"></i></div>
+                  <div class="faq-answer"><p>Yes, you can request a refund within 14 days after the course starts if the format doesn’t suit you or you cannot continue. After this period, refunds are only possible in exceptional cases.</p></div>
                 </div>
-                
+            
                 <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Will I receive a certificate?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Yes, all students who successfully complete the course and pass the final exam receive a certificate. The certificate contains course details, acquired skills, and can be verified by employers via a QR code.</p>
-                    </div>
+                  <div class="faq-question"><span>Will I receive a certificate?</span><i class="fas fa-chevron-down"></i></div>
+                  <div class="faq-answer"><p>Yes, all students who successfully complete the course and pass the final exam receive a certificate. The certificate contains course details, acquired skills, and can be verified by employers via a QR code.</p></div>
                 </div>
             </div>
         </div>
@@ -339,12 +319,28 @@
 
     <script>
         // FAQ functionality
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const item = question.parentElement;
-                item.classList.toggle('active');
+        document.addEventListener('DOMContentLoaded', function () {
+          document.querySelectorAll('.faq-question').forEach(function(q) {
+            q.addEventListener('click', function () {
+              const answer = q.nextElementSibling;
+              const icon = q.querySelector('i');
+
+              if (!answer) {
+                console.warn('FAQ: nextElementSibling not found for', q);
+                return;
+              }
+
+              answer.classList.toggle('active');
+              q.classList.toggle('active');
+
+              if (icon) {
+                icon.style.transform = answer.classList.contains('active')
+                  ? 'rotate(180deg)'
+                  : 'rotate(0deg)';
+              }
             });
-        });
+          });
+        }); 
         
         // Animation on scroll
         document.addEventListener('DOMContentLoaded', function() {

@@ -376,14 +376,15 @@ body {
 .faq-container {
     max-width: 800px;
     margin: 0 auto;
-
 }
+
 .faq-item {
     background: var(--white);
     border-radius: 10px;
     margin-bottom: 20px;
     box-shadow: var(--shadow);
     overflow: hidden;
+    transition: box-shadow 0.3s ease;
 }
 
 .faq-question {
@@ -402,21 +403,25 @@ body {
 }
 
 .faq-answer {
-    padding: 0 20px;
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease, padding 0.3s ease;
+    padding: 0 20px;
     color: var(--text-light);
     line-height: 1.6;
+    transition: max-height 0.3s ease, padding 0.3s ease;
 }
 
 .faq-item.active .faq-answer {
-    max-height: 500px;
     padding: 0 20px 20px;
 }
 
 .faq-item.active .faq-question i {
     transform: rotate(180deg);
+}
+
+.faq-question:focus {
+    outline: 2px dashed rgba(0,196,140,0.25);
+    outline-offset: 3px;
 }
 
 /* CTA Section */
