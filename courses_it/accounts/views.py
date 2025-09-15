@@ -8,6 +8,7 @@ from rest_framework_simplejwt.exceptions import TokenError
 from .models import CustomUser
 from .serializers import RegisterSerializer, CustomTokenObtainPairSerializer
 # --- HTML Views ---
+import re
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -49,21 +50,58 @@ class LogoutView(APIView):
 # --- HTML Views ---
 def register_page(request):
     if request.method == "POST":
+        username = request.POST.get("username")
         email = request.POST.get("email")
         password = request.POST.get("password")
         password2 = request.POST.get("password2")
 
+        # Validate passwords match
         if password != password2:
             messages.error(request, "Passwords do not match")
             return redirect("accounts:register")
 
+        # Validate username
+        if not username or len(username) < 3:
+            messages.error(request, "Username must be at least 3 characters long")
+            return redirect("accounts:register")
+            
+        if len(username) > 20:
+            messages.error(request, "Username must be less than 20 characters")
+            return redirect("accounts:register")
+            
+        if not re.match("^[a-zA-Z0-9_]+$", username):
+            messages.error(request, "Username can only contain letters, numbers and underscores")
+            return redirect("accounts:register")
+            
+        if CustomUser.objects.filter(username=username).exists():
+            messages.error(request, "This username is already taken")
+            return redirect("accounts:register")
+
+        # Validate email
         if CustomUser.objects.filter(email=email).exists():
             messages.error(request, "This email is already registered")
             return redirect("accounts:register")
 
-        user = CustomUser.objects.create_user(email=email, password=password)
-        messages.success(request, "Registration successful! Please log in.")
-        return redirect("accounts:login")
+        # Create user and automatically log in
+        try:
+            user = CustomUser.objects.create_user(
+                username=username, 
+                email=email, 
+                password=password
+            )
+            
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.success(request, "Registration successful! You are now logged in.")
+                return redirect("accounts:dashboard")
+            else:
+                messages.error(request, "Registration successful but automatic login failed. Please log in manually.")
+                return redirect("accounts:login")
+                
+        except Exception as e:
+            messages.error(request, f"Error creating account: {str(e)}")
+            return redirect("accounts:register")
 
     return render(request, "accounts/register.html")
 

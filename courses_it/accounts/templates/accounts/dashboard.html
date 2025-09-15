@@ -1,29 +1,79 @@
 {% extends 'main/base.html' %}
 {% load static %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Profile - {{ user.username }}{% endblock %}
 
 {% block content %}
-<body>
-    <header>
-        <h1>Welcome, {{ user.username }}!</h1>
-        <nav>
-            <a href="{% url 'accounts:logout' %}">Logout</a>
-        </nav>
+<div class="profile-container">
+    <header class="profile-header">
+        <h1>Welcome, {% if user.username %}{{ user.username }}{% else %}{{ user.email }}{% endif %}!</h1>
+        <a href="{% url 'accounts:logout' %}" class="logout-btn">Logout</a>
     </header>
 
-    <main>
-        <h2>User panel</h2>
-        <p>This is your personal control panel.</p>
+    <main class="profile-content">
+        <aside class="profile-sidebar">
+            <div class="decorative-element deco-1"></div>
+            <div class="decorative-element deco-2"></div>
+            
+            <div class="user-avatar">
+                {% if user.username %}
+                    {{ user.username|first|upper }}
+                {% else %}
+                    {{ user.email|first|upper }}
+                {% endif %}
+            </div>
+            
+            <h2 style="text-align: center; margin-bottom: 1.5rem;">Your Profile</h2>
+            
+            <div class="user-stats">
+                <div class="stat-item">
+                    <span>Member since</span>
+                    <span class="stat-value">{{ user.date_joined|date:"M Y" }}</span>
+                </div>
+                <div class="stat-item">
+                    <span>Status</span>
+                    <span class="stat-value">Active</span>
+                </div>
+                <div class="stat-item">
+                    <span>Profile complete</span>
+                    <span class="stat-value">85%</span>
+                </div>
+            </div>
+        </aside>
 
-        <section>
-            <h3>Profile data</h3>
-            <ul>
-                <li>Username: {{ user.username }}</li>
-                <li>Email: {{ user.email }}</li>
-                <li>Date aded: {{ user.date_joined }}</li>
-            </ul>
+        <section class="profile-main">
+            <div class="profile-card">
+                <h3>Profile Information</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Username</div>
+                        <div class="info-value">{{ user.username }}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Email Address</div>
+                        <div class="info-value">{{ user.email }}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Account Created</div>
+                        <div class="info-value">{{ user.date_joined|date:"F j, Y" }}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Last Login</div>
+                        <div class="info-value">Recently</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-card">
+                <h3>Quick Actions</h3>
+                <div class="actions-grid">
+                    <a href="#" class="action-btn">Edit Profile</a>
+                    <a href="#" class="action-btn">Change Password</a>
+                    <a href="#" class="action-btn">Privacy Settings</a>
+                    <a href="#" class="action-btn">Notification Preferences</a>
+                </div>
+            </div>
         </section>
     </main>
-</body>
+</div>
 {% endblock %}
