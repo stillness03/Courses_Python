@@ -14,34 +14,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <header class="header sticky-top">
+    <header class="header">
         <div class="header-container">
             <div class="logo">
                 <a href="/"><img src="{% static 'img/logo.png' %}" alt="Learnix" class="learnx-logo"></a>
                 <i class="text-logo-icon">Learnix</i>
             </div>
-
-            <button class="burger-menu d-lg-none" aria-label="Toggle navigation">
+        
+            <button class="burger-menu" aria-label="Toggle navigation">
                 <span class="burger-line"></span>
                 <span class="burger-line"></span>
                 <span class="burger-line"></span>
             </button>
-
+        
             <nav class="header-nav">
                 <ul class="nav-links">
                     <li><a href="/about_us" class="nav-item">About us</a></li>
                     <li><a href="/cost" class="nav-item">Cost</a></li>
-                    <li class="nav-item mega-dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" id="coursesDropdown">
+                    <li class="mega-dropdown">
+                        <a href="#" class="dropdown-toggle">
                             Courses
                         </a>
                         <div class="mega-menu">
                             <div class="mega-content">
-                            <!-- left -->
                                 <div class="mega-left">
                                     <h3>All Courses</h3>
                                     <div class="course-types">
-                                        <button class="type-btn active" data-type="technical">Technical</button>
+                                        <button class="type-btn active" data-type="all">All</button>
+                                        <button class="type-btn" data-type="technical">Technical</button>
                                         <button class="type-btn" data-type="nontechnical">Nontechnical</button>
                                     </div>
                                     <div class="course-list">
@@ -55,8 +55,6 @@
                                         {% endfor %}
                                     </div>
                                 </div>
-                        
-                                <!-- right -->
                                 <div class="mega-right">
                                     <h3>New Courses</h3>
                                     <div class="popular-courses">
@@ -79,15 +77,11 @@
                             </div>
                         </div>
                     </li>
-                
-                
                     <li>
                         <a href="{% if user.is_authenticated %}{% url 'accounts:dashboard' %}{% else %}{% url 'accounts:login' %}{% endif %}" class="nav-item">
                             <img src="{% static 'img/login.png' %}" 
                                 alt="{% if user.is_authenticated %}Profile{% else %}Login{% endif %}" 
-                                class="profile-icon"
-                                width="32"
-                                height="32">
+                                class="profile-icon">
                         </a>
                     </li>
                 </ul>
@@ -157,6 +151,43 @@
         // Mobile menu toggle
         document.querySelector('.burger-menu').addEventListener('click', function() {
             document.querySelector('.header-nav').classList.toggle('active');
+        });
+
+
+        // Scroll behavior for header
+        let lastScrollTop = 0;
+        const header = document.querySelector('.header');
+        const scrollThreshold = 100;
+
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (scrollTop > lastScrollTop && scrollTop > scrollThreshold) {
+                // Scrolling down - hide header
+                header.classList.add('hidden');
+            } else {
+                // Scrolling up - show header
+                header.classList.remove('hidden');
+            }
+
+            lastScrollTop = scrollTop;
+        });
+
+        // Mobile menu toggle
+        const burgerMenu = document.querySelector('.burger-menu');
+        const headerNav = document.querySelector('.header-nav');
+
+        burgerMenu.addEventListener('click', () => {
+            burgerMenu.classList.toggle('active');
+            headerNav.classList.toggle('active');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.header-nav') && !e.target.closest('.burger-menu')) {
+                burgerMenu.classList.remove('active');
+                headerNav.classList.remove('active');
+            }
         });
     </script>
 </body>
