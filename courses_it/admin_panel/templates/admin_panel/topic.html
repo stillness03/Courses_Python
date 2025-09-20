@@ -70,6 +70,10 @@ document.addEventListener("DOMContentLoaded", () => {
               <td>${topic.course || "—"}</td>
               <td>${topic.content}</td>
               <td>${new Date(topic.created_at).toLocaleDateString()}</td>
+            <td>
+                <button class="btn btn-sm btn-warning me-1" onclick="editTopic(${topic.id})">Edit</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteTopic(${topic.id})">Delete</button>
+            </td>
             </tr>
           `;
         });
@@ -91,6 +95,50 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
   }
+
+  // Edit topic
+window.editTopic = function(id) {
+  const newTitle = prompt("Enter new title:");
+  const newContent = prompt("Enter new content:");
+  const newCourse = prompt("Enter new course ID:");
+  if (!newTitle || !newContent || !newCourse) {
+    return alert("All fields are required.");
+  }
+
+  fetch(`/api/topics/${id}/`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRFToken": window.CSRF_TOKEN
+    },
+    body: JSON.stringify({
+      title: newTitle,
+      content: newContent,
+      course: parseInt(newCourse)
+    })
+  })
+  .then(res => {
+    if (!res.ok) throw new Error("Failed to update topic");
+    return res.json();
+  })
+  .then(() => loadTopics())
+  .catch(err => alert(err));
+};
+
+  // Delete topic
+window.deleteTopic = function(id) {
+  if (!confirm("Are you sure you want to delete this topic?")) return;
+
+  fetch(`/api/topics/${id}/`, {
+    method: "DELETE",
+    headers: { "X-CSRFToken": window.CSRF_TOKEN }
+  })
+  .then(res => {
+    if (!res.ok) throw new Error("Failed to delete topic");
+    loadTopics();
+  })
+  .catch(err => alert(err));
+};
 
   // Create topic
 document.getElementById("create-topic-form").addEventListener("submit", function(e) {
