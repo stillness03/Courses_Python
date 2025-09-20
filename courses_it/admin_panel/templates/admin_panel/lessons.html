@@ -2,54 +2,73 @@
 {% block title %}Lessons{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-4">
-  <h2>Lessons</h2>
-  <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createLessonModal">+ Add Lesson</button>
-</div>
+<div class="page-container">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="page-title">Lessons</h2>
+    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createLessonModal">+ Add Lesson</button>
+  </div>
 
-<!-- Table Lessons-->
-<table class="table table-striped shadow-sm">
-  <thead class="table-dark">
-    <tr>
-      <th>ID</th>
-      <th>Title</th>
-      <th>Course</th>
-      <th>Topic</th>
-      <th>Created</th>
-    </tr>
-  </thead>
-  <tbody id="lessons-table">
-  </tbody>
-</table>
+  <!-- Table Lessons-->
+ <div class="page-table"></div>
+  <table class="table">
+    <thead class="table-header">
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Course</th>
+        <th>Topic</th>
+        <th>Created</th>
+      </tr>
+    </thead>
+      <tbody id="lessons-table">
+        <tr class="loading-row">
+            <td colspan="6"></td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
 
-<!-- Modal for created -->
-<div class="modal fade" id="createLessonModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Create Lesson</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-        <form id="create-lesson-form">
-          <div class="mb-3">
-            <label class="form-label">Title</label>
-            <input type="text" class="form-control" name="title" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Content</label>
-            <textarea class="form-control" name="content"></textarea>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Course</label>
-            <select class="form-select" name="course" id="course-select" required></select>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Topic</label>
-            <select class="form-select" name="topic" id="topic" required></select>
-          </div>
-          <button type="submit" class="btn btn-primary">Create</button>
-        </form>
+  <!-- Modal for created -->
+  <div class="modal fade" id="createLessonModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create New Lesson</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="create-lesson-form">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Title *</label>
+                <input type="text" class="form-control" name="title" required placeholder="Enter lesson title">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Course *</label>
+                <select class="form-select" name="course" id="course-select" required>
+                  <option value="">Select a course</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label">Topic *</label>
+              <select class="form-select" name="topic" id="topic" required>
+                <option value="">Select a topic</option>
+              </select>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label">Content</label>
+              <textarea class="form-control" name="content" rows="4" placeholder="Enter lesson content"></textarea>
+            </div>
+            
+            <div class="d-flex gap-2 justify-content-end">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Create Lesson</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
