@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views import View
 from courses.models import Course
 from django.core.paginator import Paginator
+from django.conf import settings
 
 def popular_list(request):
     courses = Course.objects.filter()[:3]
@@ -74,11 +75,21 @@ class CourseDetail(View):
 
         topics = course.topics.all().order_by('created_at')
         total_lessons = course.lessons.count()
-
         avg_salary = "$2500"
+
+        images_raw = settings.COURSE_CONTENT.get(slug, [])
+
+        images = [
+            {
+                "file": f"{slug}/{img.get('file', '')}",
+                "class": img.get("class", "")
+            }
+            for img in images_raw if img.get("file")
+        ]
 
         return render(request, 'courses/course_detail.html', {
             'course': course,
+            'images': images,
             'topics': topics,
             'forpagecourse': forpagecourse,
             'total_lessons': total_lessons,

@@ -5,14 +5,17 @@
 
 {% block content %}
 
-<div class="courses-page">
-    <div class="course-header">
-        <div class="main-container">
-            <h1 class="course-title">{{ course.title}}</h1>
-            <button class="btn-help" title="select learning plan"></button>
-            <img class="figma", src="{% static 'img/figma.png' %}" alt="figma">
-            <img class="phone", src="{% static 'img/phone.png' %}" alt="phone">
-        </div> 
+    <div class="courses-page">
+        <div class="course-header">
+            <div class="main-container">
+                <h1 class="course-title">{{ course.title }}</h1>
+                <button class="btn-help" title="select learning plan"></button>
+                
+                {% for img in images %}
+                    <img src="{% static 'img/courses/' %}{{ img.file }}" class="{{ img.class }}" alt="">
+                {% endfor %}
+            </div>
+        </div>
     </div>
 
     <!-- Did you know? -->

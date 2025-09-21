@@ -1,8 +1,6 @@
 from rest_framework import viewsets, permissions
-from django.views import View
 from .serializers import CourseSerializer, FAQSerializer, ForPageCourseSerializer, LessonSerializer, QuizSerializer, QuestionSerializer, AnswerSerializer, TopicSerializer
 from .models import FAQ, Course, Lesson, Quiz, Question, Answer, Topic, ForPageCourse
-from django.shortcuts import get_object_or_404, render
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 
 class IsAdminOrReadOnly(BasePermission):
@@ -56,24 +54,3 @@ class FAQViewSet(viewsets.ModelViewSet):
     serializer_class = FAQSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsAdminOrReadOnly]
 
-
-# HTML Views
-class CourseDetail(View):
-    def get(self, request, course_id):
-        course = get_object_or_404(Course, id=course_id)
-
-        forpagecourse = getattr(course, 'extended_info', None)
-
-        topics = course.topics.all().order_by('created_at')
-        print(topics)
-        total_lessons = course.lessons.count()
-
-        avg_salary = "$2500"
-
-        return render(request, 'courses/course_detail.html', {
-            'course': course,
-            'topics': topics,
-            'forpagecourse': forpagecourse,
-            'total_lessons': total_lessons,
-            'avg_salary': avg_salary
-        })

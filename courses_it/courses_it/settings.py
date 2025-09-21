@@ -1,6 +1,6 @@
 from datetime import timedelta
 from pathlib import Path
-import os
+import os, json
 from dotenv import load_dotenv
 
 load_dotenv() 
@@ -8,6 +8,11 @@ load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+COURSE_IMAGES_FILE = os.path.join(BASE_DIR, "main", "static", "data", "course_images.json")
+
+with open(COURSE_IMAGES_FILE, encoding="utf-8") as f:
+    COURSE_CONTENT = json.load(f)
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
@@ -150,3 +155,4 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 # Stripe configuration
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
 STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY')
+
