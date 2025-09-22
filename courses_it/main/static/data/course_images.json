@@ -2,6 +2,11 @@
   "uiux-design-ai": [
     { "file": "phone.png", "class": "phone" },
     { "file": "figma.png", "class": "figma" }
+  ],
+  "python-developer": [
+    { "file": "laptop.png", "class": "laptop" },
+    { "file": "python.png", "class": "python" },
+    { "file": "code.png", "class": "code" }
   ]
 }
 

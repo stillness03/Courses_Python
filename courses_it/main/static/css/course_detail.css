@@ -138,7 +138,7 @@ body {
 .figma {
     position: absolute;
     left: 195px;
-    height: 360px;
+    height: 340px;
     z-index: 1;
     filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.5));
     transform: rotate(-15deg); 
@@ -148,12 +148,43 @@ body {
 .phone {
     position: absolute;
     right: 195px;
-    height: 660px;
+    height: 640px;
     z-index: 1;
     filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.5));
     transform: rotate(15deg); 
     transition: transform 0.4s ease;
 }
+
+.laptop {
+    position: absolute;
+    right: 15px;
+    height: 540px;
+    z-index: 1;
+    filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.5));
+    transition: transform 0.4s ease;
+}
+
+.python {
+    position: absolute;
+    left: 195px;
+    height: 340px;
+    z-index: 1;
+    filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.5));
+    transform: rotate(-15deg); 
+    transition: transform 0.4s ease;
+}
+
+.code {
+    position: absolute;
+    top: 200px;
+    right: 35rem;
+    height: 240px;
+    z-index: 1;
+    filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.5));
+    transform: rotate(25deg); 
+    transition: transform 0.4s ease;
+}
+
 
 .phone:hover {
     transform: rotate(15deg) translateY(-5px);
